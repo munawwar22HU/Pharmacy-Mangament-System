@@ -15,13 +15,13 @@ router.post('/remove', (req, res) => {
 })
 
 // update medicine description (pharmacist)
-router.post('/update/description', (req, res) => {
+router.post('/update-description', (req, res) => {
     let data = req.body;
     res.send({ status: 0 });
 })
 
 // update quantity (manager)
-router.post('/update/quantity', (req, res) => {
+router.post('/update-quantity', (req, res) => {
     let data = req.body;
     res.send({ status: 0 });
 })
