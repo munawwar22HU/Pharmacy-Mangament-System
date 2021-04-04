@@ -21,6 +21,11 @@ var order = require('./Routing/order');
 var payment = require('./Routing/payment');
 var shipping = require('./Routing/shipping');
 
+app.use((req, res, next) => {
+    console.log('Logger');
+    next();
+})
+
 app.use('/admin', admin);
 app.use('/auth', auth);
 app.use('/cart', cart);
