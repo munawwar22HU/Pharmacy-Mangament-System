@@ -1,6 +1,6 @@
-var express = require('express')
-var router = express.Router()
-
+var express = require('express');
+var router = express.Router();
+// const connectDB = require('./../connection');
 
 // add user of any type (admin)
 router.post('/add', (req, res) => {
