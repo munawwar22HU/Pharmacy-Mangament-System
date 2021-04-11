@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    _id: mongoose.Types.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     type: String,
     email: String,
+    name: String,
     password: String,
-    userName: String,
     phone: String,
     cart: [{
         name: String,

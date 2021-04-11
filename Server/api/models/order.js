@@ -9,7 +9,8 @@ const orderSchema = mongoose.Schema({
     }],
     totalAmount: Number,
     shipping: mongoose.Types.ObjectId,
-    payment: mongoose.Types.ObjectId
+    payment: mongoose.Types.ObjectId,
+    shippingCompany: String
 })
 
 module.exports = mongoose.model('Order', orderSchema);
