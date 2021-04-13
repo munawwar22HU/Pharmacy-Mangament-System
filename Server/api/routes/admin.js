@@ -111,17 +111,42 @@ router.post('/get-users', (req, res) => {
                 res.send({ status: -1 });
                 return;
             } else {
-                User.find({ type: req.body.type })
-                    .then((result) => {
-                        console.log('Users sent to admin');
-                        res.send({ status: 0, data: result });
-                        return;
-                    })
-                    .catch((err) => {
-                        console.log('Error');
-                        res.send({ status: -1 });
-                        return;
-                    });
+                if (req.body.type === '') {
+                    User.find({ type: { '$ne': 'admin' } })
+                        .then((result) => {
+                            console.log('Users sent to admin');
+                            res.send({ status: 0, data: result });
+                            return;
+                        })
+                        .catch((err) => {
+                            console.log('Error');
+                            res.send({ status: -1 });
+                            return;
+                        });
+                } else {
+                    User.find({ type: req.body.type })
+                        .then((result) => {
+                            console.log('Users sent to admin');
+                            res.send({ status: 0, data: result });
+                            return;
+                        })
+                        .catch((err) => {
+                            console.log('Error');
+                            res.send({ status: -1 });
+                            return;
+                        });
+                }
+                // User.find({ type: req.body.type })
+                //     .then((result) => {
+                //         console.log('Users sent to admin');
+                //         res.send({ status: 0, data: result });
+                //         return;
+                //     })
+                //     .catch((err) => {
+                //         console.log('Error');
+                //         res.send({ status: -1 });
+                //         return;
+                //     });
             }
         })
         .catch((err) => {

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./connection');
 
-connectDB();
+// connectDB();
 
 app.use(cors());
 
@@ -38,4 +38,7 @@ app.use('/order', order);
 app.use('/payment', payment);
 app.use('/shipping', shipping);
 
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    connectDB();
+});

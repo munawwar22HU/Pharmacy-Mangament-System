@@ -18,7 +18,7 @@ router.post('/add', (req, res) => {
                 const medicine = new Medicine({
                     _id: new mongoose.Types.ObjectId(),
                     name: req.body.name,
-                    description: req.body.medicine,
+                    description: req.body.description,
                     prescription: Boolean(req.body.prescription),
                     price: Number(req.body.price),
                     stockQuantity: Number(req.body.stockQuantity)
@@ -80,28 +80,119 @@ router.post('/remove', (req, res) => {
         });
 });
 
-// update medicine description (pharmacist)
-router.post('/update-description', (req, res) => {
-    let data = req.body;
-    res.send({ status: 0 });
+// update medicine details (pharmacist)
+router.post('/update-medicine', (req, res) => {
+    user.findById(req.body.id)
+        .then((result) => {
+            if (result === null || result.type !== 'pharmacist') {
+                console.log('Pharmacist auth failed');
+                res.send({ status: -1 });
+                return;
+            } else {
+                Medicine.findByIdAndUpdate(req.body.medicineId, {
+                        name: req.body.name,
+                        description: req.body.description,
+                        prescription: Boolean(req.body.prescription),
+                        price: Number(req.body.price)
+                    }, {
+                        upsert: false,
+                        useFindAndModify: false,
+                        new: true
+                    },
+                    (err, doc) => {
+                        if (doc === null) {
+                            console.log('Medicine does not exist');
+                            res.send({ status: -1 });
+                            return;
+                        } else {
+                            console.log('Medicine updated by pharmacist');
+                            res.send({ status: 0 });
+                            return;
+                        }
+                    });
+            }
+        })
+        .catch((err) => {
+            console.log('Pharmacist auth failed');
+            res.send({ status: -1 });
+            return;
+        });
 });
 
 // update quantity (manager)
 router.post('/update-quantity', (req, res) => {
-    let data = req.body;
-    res.send({ status: 0 });
+    user.findById(req.body.id)
+        .then((result) => {
+            if (result === null || result.type !== 'manager') {
+                console.log('Manager auth failed');
+                res.send({ status: -1 });
+                return;
+            } else {
+                Medicine.findByIdAndUpdate(req.body.medicineId, {
+                        stockQuantity: Number(req.body.stockQuantity)
+                    }, {
+                        upsert: false,
+                        useFindAndModify: false,
+                        new: true
+                    },
+                    (err, doc) => {
+                        if (doc === null) {
+                            console.log('Medicine does not exist');
+                            res.send({ status: -1 });
+                            return;
+                        } else {
+                            console.log('Medicine quantity updated by manager');
+                            res.send({ status: 0 });
+                            return;
+                        }
+                    });
+            }
+        })
+        .catch((err) => {
+            console.log('Manager auth failed');
+            res.send({ status: -1 });
+            return;
+        });
 });
 
 // search medicine (if no search string is provided get all medicines) (customer, manager, pharmacist)
 router.post('/search', (req, res) => {
-    let data = req.body;
-    res.send({ status: 0 });
+    user.findById(req.body.id)
+        .then((result) => {
+            if (result === null || result.type !== 'pharmacist') {
+                console.log('Pharmacist auth failed');
+                console.log('test');
+                res.send({ status: -1 });
+                return;
+            } else {
+                // add code here
+            }
+        })
+        .catch((err) => {
+            console.log('Pharmacist auth failed');
+            res.send({ status: -1 });
+            return;
+        });
 });
 
 // validate prescription (pharmacist)
 router.post('/prescription', (req, res) => {
-    let data = req.body;
-    res.send({ status: 0 });
+    user.findById(req.body.id)
+        .then((result) => {
+            if (result === null || result.type !== 'pharmacist') {
+                console.log('Pharmacist auth failed');
+                console.log('test');
+                res.send({ status: -1 });
+                return;
+            } else {
+                // add code here
+            }
+        })
+        .catch((err) => {
+            console.log('Pharmacist auth failed');
+            res.send({ status: -1 });
+            return;
+        });
 });
 
 module.exports = router;
