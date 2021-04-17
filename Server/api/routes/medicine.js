@@ -156,23 +156,48 @@ router.post('/update-quantity', (req, res) => {
 });
 
 // search medicine (if no search string is provided get all medicines) (customer, manager, pharmacist)
-router.post('/search', (req, res) => {
-    user.findById(req.body.id)
-        .then((result) => {
-            if (result === null || result.type !== 'pharmacist') {
-                console.log('Pharmacist auth failed');
-                console.log('test');
-                res.send({ status: -1 });
-                return;
-            } else {
-                // add code here
-            }
-        })
-        .catch((err) => {
-            console.log('Pharmacist auth failed');
-            res.send({ status: -1 });
-            return;
-        });
+router.get('/search', (req, res) => {
+    // user.findById(req.body.id)
+    //     .then((result) => {
+    //         if (result === null || result.type !== 'pharmacist') {
+    //             console.log('Pharmacist auth failed');
+    //             console.log('test');
+    //             res.send({ status: -1 });
+    //             return;
+    //         } 
+    //         else {
+    //             // var myCursor =  db.Medicine.find( {} );
+    //             // myCursor.forEach(printjson);
+                Medicine.find({})
+                .then((result1) => {
+                    if (result1 === null) {
+                        console.log('No medicine found');
+                        res.send({ status: -1 });
+                        return;
+                    } else {
+                        console.log('Medicine Found');
+                        res.json({
+                            products: result1
+                        });
+                        //console.log(result1);
+                        return;
+                    }
+                })
+                .catch((err) => {
+                    console.log('Search faled');
+                    res.send({ status: -1 });
+                    return;
+                })
+              
+                
+           //}
+        // })
+        // .catch((err) => {
+        //     console.log('Error occured while searching');
+        //     res.send({ status: -1 });
+        //     result.console()
+        //     return;
+        // });
 });
 
 // validate prescription (pharmacist)
