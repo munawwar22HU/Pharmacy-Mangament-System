@@ -5,15 +5,18 @@ const User = require('./../models/user');
 
 // check user credentials and handle login (any user)
 router.post('/login', (req, res) => {
+    console.log(req.body.email);
+    console.log(req.body.password);
     User.findOne({ email: req.body.email, password: req.body.password })
         .then((result) => {
             if (result === null) {
+                console.log(result);
                 console.log('Login failed');
-                res.send({ status: -1 });
+                res.json('Login failed');
                 return;
             } else {
                 console.log('Login successful');
-                res.send({ status: 0, data: result });
+                res.json({auth: true, email: req.body.email, username: req.body.name});
                 return;
             }
         })
@@ -26,9 +29,11 @@ router.post('/login', (req, res) => {
 
 // create a new user account (customer)
 router.post('/register', (req, res) => {
+    console.log(req.body);
     User.findOne({ email: req.body.email })
         .then((result) => {
             if (result === null) {
+                
                 const user = new User({
                     _id: new mongoose.Types.ObjectId(),
                     type: 'user',
@@ -43,16 +48,22 @@ router.post('/register', (req, res) => {
 
                 user.save()
                     .then((result) => {
-                        console.log('User registered');
-                        res.send({ status: 0 });
+                        res.json({message:'User registered'});
+                        console.log('Register hogaya');
+                        // res.send({ status: 0 });
                         return;
                     });
             } else {
-                console.log('Email already in use');
-                res.send({ status: -1 });
+                res.json({message:'Email Already in use'});
+                // res.send({ status: -1 });
                 return;
             }
-        });
+        })
+        .catch((err) => {
+            console.log('Login faled');
+            res.send({ status: -1 });
+            return;
+        })
 });
 
 module.exports = router;
