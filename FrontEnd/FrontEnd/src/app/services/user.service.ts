@@ -66,7 +66,6 @@ export class UserService {
           console.log('hello');
           console.log(data);
           this.auth = data.auth;
-          this.userRole = data.role;
           this.authState$.next(this.auth);
           this.userData$.next(data);
         }
@@ -101,13 +100,10 @@ export class UserService {
 export interface ResponseModel {
   auth: boolean;
   email: string;
-  username: string;
-  fname: string;
-  lname: string;
-  photoUrl: string;
-  userId: number;
+  name: string;
+  phone: string;
+  id: string;
   type: string;
-  role: number;
 }
 
 

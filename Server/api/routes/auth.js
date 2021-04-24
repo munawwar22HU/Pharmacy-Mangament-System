@@ -11,18 +11,16 @@ router.post('/login', (req, res) => {
         .then((result) => {
             if (result === null) {
                 console.log(result);
-                console.log('Login failed');
                 res.json('Login failed');
                 return;
             } else {
                 console.log('Login successful');
-                res.json({auth: true, email: req.body.email, username: req.body.name});
+                res.json({auth: true, email: result.email, name: result.name , phone: result.phone , type: result.type , id: result.id});
                 return;
             }
         })
         .catch((err) => {
-            console.log('Login faled');
-            res.send({ status: -1 });
+            res.json('Login failed');
             return;
         })
 });

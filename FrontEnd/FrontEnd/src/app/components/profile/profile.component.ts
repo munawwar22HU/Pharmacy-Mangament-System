@@ -10,7 +10,7 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  myUser: any;
+  myUser: ResponseModel;
 
 
   constructor(private authService: AuthService,
@@ -19,21 +19,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.userData$
-      .pipe(
-        map((user: SocialUser | ResponseModel) => {
-          if (user instanceof SocialUser || user.type === 'social') {
-            return {
-              ...user,
-              email: 'test@test.com',
-
-            };
-          } else {
-            return user;
-          }
-        })
-      )
-      .subscribe((data: ResponseModel | SocialUser) => {
+    this.userService.userData$.subscribe((data: ResponseModel ) => {
         this.myUser = data;
       });
   }

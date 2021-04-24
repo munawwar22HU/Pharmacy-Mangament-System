@@ -6,7 +6,7 @@ export interface ProductModelServer {
   price: number;
   image: string;
   stockquantity: number;
-  images: string;
+  category: string;
 }
 
 export interface ServerResponse {

@@ -3,6 +3,7 @@ import {ProductService} from '../../services/product.service';
 import {CartService} from '../../services/cart.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {map} from 'rxjs/operators';
+import {ProductModelServer, ServerResponse} from '../../models/product.model';
 
 declare let $: any;
 
@@ -13,8 +14,8 @@ declare let $: any;
 })
 export class ProductComponent implements OnInit, AfterViewInit {
   id: number;
-  product;
-  thumbImages: any[] = [];
+  product: ProductModelServer;
+ 
 
   @ViewChild('stockquantity') quantityInput;
 
@@ -36,9 +37,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
         this.productService.getSingleProduct(this.id).subscribe(prod => {
           this.product = prod;
 
-          if (prod.images !== null) {
-            this.thumbImages = prod.images.split(';');
-          }
+          
 
         });
       });
@@ -87,13 +86,16 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   Increase() {
-    let value = parseInt(this.quantityInput.nativeElement.value);
 
-    if (this.product.quantity >= 1) {
+    console.log('increase');
+    let value = parseInt(this.quantityInput.nativeElement.value);
+    console.log(value);
+
+    if (this.product.stockquantity >= 1) {
       value++;
 
-      if (value > this.product.quantity) {
-        value = this.product.quantity;
+      if (value > this.product.stockquantity) {
+        value = this.product.stockquantity;
       }
     } else {
       return;
@@ -105,8 +107,10 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   Decrease() {
     let value = parseInt(this.quantityInput.nativeElement.value);
+    console.log('decrease');
+    console.log(value);
 
-    if (this.product.quantity > 0) {
+    if (this.product.stockquantity > 0) {
       value--;
 
       if (value <= 1) {

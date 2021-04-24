@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="profile-img">
-          <img [src]="myUser?.photoUrl" alt="{{myUser?.firstName || myUser?.fname}}"/>
+          <img src= "https://www.getprofessional.pk/wp-content/uploads/2014/04/img.png" alt="{{myUser.name}}"/>
           <div class="file btn btn-lg btn-primary">
             Change Photo
             <input name="file" type="file"/>
@@ -13,20 +13,12 @@
       <div class="col-md-6">
         <div class="profile-head">
           <h5>
-            {{myUser?.name || (myUser.fname + ' ' + myUser.lname)}}
+            {{myUser.name}}
           </h5>
-          <h6>
-            Web Developer and Designer
-          </h6>
-          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
               <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab"
                  role="tab">About</a>
-            </li>
-            <li class="nav-item">
-              <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab"
-                 role="tab">Timeline</a>
             </li>
           </ul>
         </div>
@@ -36,37 +28,15 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4">
-        <div class="profile-work">
-          <p>WORK LINK</p>
-          <a href="">Website Link</a><br/>
-          <a href="">Bootsnipp Profile</a><br/>
-          <a href="">Bootply Profile</a>
-          <p>SKILLS</p>
-          <a href="">Web Designer</a><br/>
-          <a href="">Web Developer</a><br/>
-          <a href="">WordPress</a><br/>
-          <a href="">WooCommerce</a><br/>
-          <a href="">PHP, .Net</a><br/>
-        </div>
-      </div>
       <div class="col-md-8">
         <div class="tab-content profile-tab" id="myTabContent">
-          <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">
-            <div class="row">
-              <div class="col-md-6">
-                <label>User Id</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{myUser.id || myUser.userId}}</p>
-              </div>
-            </div>
+          <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">  
             <div class="row">
               <div class="col-md-6">
                 <label>Name</label>
               </div>
               <div class="col-md-6">
-                <p>{{myUser.name || myUser.username}}</p>
+                <p>{{myUser.name}}</p>
               </div>
             </div>
             <div class="row">
@@ -82,19 +52,19 @@
                 <label>Phone</label>
               </div>
               <div class="col-md-6">
-                <p>9999-778-754</p>
+                <p>{{myUser.phone}}</p>
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-6">
                 <label>Profession</label>
               </div>
               <div class="col-md-6">
-                <p>Web Developer and Designer</p>
+                <p>{{myUser.type}}</p>
               </div>
-            </div>
+            </div> -->
           </div>
-          <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
+          <!-- <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
             <div class="row">
               <div class="col-md-6">
                 <label>Experience</label>
@@ -141,7 +111,7 @@
                 <p>Your detail description</p>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
