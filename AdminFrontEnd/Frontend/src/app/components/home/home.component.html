@@ -1,0 +1,55 @@
+<!-- SECTION -->
+<div class="section">
+  <!-- container -->
+  <div class="container">
+    <!-- row -->
+    <div class="row">
+
+      <!-- section title -->
+      <div class="col-md-12">
+        <div class="section-title">
+          <h3 class="title">Products</h3>
+        </div>
+      </div>
+      <!-- /section title -->
+
+      <!-- Products tab & slick -->
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4 col-sm-6" *ngFor="let p of products">
+            <div class="card my-2">
+              <img src="/assets/img/dormicum_tab.jpg" alt="{{p.name}}" width="200px" class="card-img-top" style="cursor: pointer;" (click)="selectProduct(p.id)">
+              <div class="card-header">
+                <div class="card-title">
+                  <p>{{p.name | titlecase}}</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <h6>{{p.description.substr(0, 25)}} ...</h6>
+                <p class="lead">{{p.price | currency:'USD'}}</p>
+              </div>
+
+              
+              <div class="row d-flex justify-content-center border-primary my-3">
+                <div class="col-md-6 ">
+                  <button class="btn btn-outline-primary btn-sm btn-block"
+                          [class.disabled]="p.stockquantity == 0"
+                          [class.btn-outline-danger]="p.stockquantity == 0"
+                          (click)="selectProduct(p.id)" [disabled]="p.stockquantity == 0" >
+                          {{ p.stockquantity == 0 ? "NO STOCK" : "Add To Cart"}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+</div>
+
+
+
+
