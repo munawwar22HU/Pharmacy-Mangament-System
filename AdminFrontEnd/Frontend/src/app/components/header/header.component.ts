@@ -28,10 +28,7 @@ export class HeaderComponent implements OnInit {
 
     this.userService.authState$.subscribe(authState => this.authState = authState);
     this.userService.userData$.subscribe((userdata: ResponseModel) => {
-      this.userdata = userdata;
-      console.log(this.userdata);
-    
-      
+      this.userdata = userdata; 
     });
     
   }

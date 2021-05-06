@@ -157,17 +157,6 @@ router.post('/update-quantity', (req, res) => {
 
 // search medicine (if no search string is provided get all medicines) (customer, manager, pharmacist)
 router.get('/search', (req, res) => {
-    // user.findById(req.body.id)
-    //     .then((result) => {
-    //         if (result === null || result.type !== 'pharmacist') {
-    //             console.log('Pharmacist auth failed');
-    //             console.log('test');
-    //             res.send({ status: -1 });
-    //             return;
-    //         } 
-    //         else {
-    //             // var myCursor =  db.Medicine.find( {} );
-    //             // myCursor.forEach(printjson);
     Medicine.find({})
         .then((result1) => {
             if (result1 === null) {
@@ -188,16 +177,6 @@ router.get('/search', (req, res) => {
             res.send({ status: -1 });
             return;
         })
-
-
-    //}
-    // })
-    // .catch((err) => {
-    //     console.log('Error occured while searching');
-    //     res.send({ status: -1 });
-    //     result.console()
-    //     return;
-    // });
 });
 
 router.post('/single', (req, res) => {
@@ -208,7 +187,7 @@ router.post('/single', (req, res) => {
             res.send({ status: -1 });
             return;
         } else {
-            console.log('Medicine Found line 223');
+            console.log('Medicine Found');
             res.json({
                 id: result1.id, name: result1.name, description: result1.description, prescription: result1.prescription, price: result1.price , stockquantity: result1.stockquantity
             });
@@ -218,7 +197,7 @@ router.post('/single', (req, res) => {
         }
     })
     .catch((err) => {
-        console.log('Search faled');
+        console.log('Search failed');
         res.send({ status: -1 });
         return;
     })

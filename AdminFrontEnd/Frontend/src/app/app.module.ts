@@ -24,6 +24,8 @@ import { AdminhomeComponent } from '@app/components/adminhome/adminhome.componen
 import { AddMedicineComponent } from './components/add-medicine/add-medicine.component';
 import { AddUsersComponent } from './components/add-users/add-users.component';
 import { ViewProductsComponent } from './components/view-products/view-products.component';
+import { ViewmedicineComponent } from './components/viewmedicine/viewmedicine.component';
+import { ViewuserComponent } from './components/viewuser/viewuser.component';
 
 
 const config = new AuthServiceConfig([
@@ -51,7 +53,9 @@ export function provideConfig() {
     AdminhomeComponent,
     AddMedicineComponent,
     AddUsersComponent,
-    ViewProductsComponent
+    ViewProductsComponent,
+    ViewmedicineComponent,
+    ViewuserComponent
   ],
   imports: [
     BrowserModule,

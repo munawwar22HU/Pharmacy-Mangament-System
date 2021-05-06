@@ -13,6 +13,8 @@ import {AdminhomeComponent } from './components/adminhome/adminhome.component';
 import {ViewProductsComponent} from './components/view-products/view-products.component';
 import {AddUsersComponent} from './components/add-users/add-users.component';
 import {AddMedicineComponent} from './components/add-medicine/add-medicine.component';
+import { ViewmedicineComponent } from './components/viewmedicine/viewmedicine.component';
+import { ViewuserComponent } from './components/viewuser/viewuser.component';
 
 const routes: Routes = [
   // Define routes for the landing / home page, create a separate component for the layout of home page
@@ -25,7 +27,10 @@ const routes: Routes = [
         path: 'home', component: HomeComponent
       },
       {
-        path: 'product/:id', component: ProductComponent
+        path: 'user/:id', component: ViewuserComponent
+      },
+      {
+        path: 'medicine/:id', component: ViewmedicineComponent
       },
       {
         path: 'adminhome', component: AdminhomeComponent

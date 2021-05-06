@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectProduct(id: number) {
-    this.router.navigate(['/product', id]).then();
+    this.router.navigate(['/medicine', id]).then();
   }
 
   AddToCart(id: number) {

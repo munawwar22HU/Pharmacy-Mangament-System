@@ -114,8 +114,6 @@ router.post('/get-users', (req, res) => {
             } else {
                 if (req.body.type === '') {
                     User.find({$and: [ { _id: { '$ne': req.body.id } }, { type: { '$ne': 'user' } } ] },{cart:0,shipping:0,payment:0})
-                    // $or: [ { status: "A" }, { qty: { $lt: 30 } } ]
-                    // type: { '$ne': 'user' }
                         .then((result) => {
                             console.log('Users sent to admin');
                             console.log(result)
@@ -140,17 +138,6 @@ router.post('/get-users', (req, res) => {
                             return;
                         });
                 }
-                // User.find({ type: req.body.type })
-                //     .then((result) => {
-                //         console.log('Users sent to admin');
-                //         res.send({ status: 0, data: result });
-                //         return;
-                //     })
-                //     .catch((err) => {
-                //         console.log('Error');
-                //         res.send({ status: -1 });
-                //         return;
-                //     });
             }
         })
         .catch((err) => {

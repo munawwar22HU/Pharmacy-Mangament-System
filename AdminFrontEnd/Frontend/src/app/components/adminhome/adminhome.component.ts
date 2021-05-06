@@ -30,5 +30,9 @@ export class AdminhomeComponent implements OnInit {
     });
 
   }
+  selectUser(id: number) {
+    this.router.navigate(['/user', id]).then();
+  }
+
 
 }
