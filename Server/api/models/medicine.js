@@ -6,7 +6,7 @@ const medicineSchema = mongoose.Schema({
     description: String,
     prescription: Boolean,
     price: Number,
-    stockQuantity: Number,
+    stockquantity: Number,
     URL: String
 })
 medicineSchema.method("toJSON", function() {
@@ -16,6 +16,3 @@ medicineSchema.method("toJSON", function() {
   });
 
 module.exports = mongoose.model('Medicine', medicineSchema);
-//return 
-// const Tutorial = mongoose.model('Medicine', medicineSchema);
-// return Tutorial;

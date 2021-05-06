@@ -21,7 +21,7 @@ router.post('/add', (req, res) => {
                     description: req.body.description,
                     prescription: Boolean(req.body.prescription),
                     price: Number(req.body.price),
-                    stockQuantity: Number(req.body.stockQuantity)
+                    stockquantity: Number(req.body.stockquantity)
                 });
 
                 medicine.save()
@@ -129,7 +129,7 @@ router.post('/update-quantity', (req, res) => {
                 return;
             } else {
                 Medicine.findByIdAndUpdate(req.body.medicineId, {
-                        stockQuantity: Number(req.body.stockQuantity)
+                        stockquantity: Number(req.body.stockquantity)
                     }, {
                         upsert: false,
                         useFindAndModify: false,
@@ -201,8 +201,6 @@ router.get('/search', (req, res) => {
 });
 
 router.post('/single', (req, res) => {
-    
-    console.log('single search');
     Medicine.findById(req.body.id)
     .then((result1) => {
         if (result1 === null) {
@@ -212,7 +210,7 @@ router.post('/single', (req, res) => {
         } else {
             console.log('Medicine Found line 223');
             res.json({
-                id: result1.id, name: result1.name, description: result1.description, prescription: result1.prescription, price: result1.price , stockquantity: result1.stockQuantity
+                id: result1.id, name: result1.name, description: result1.description, prescription: result1.prescription, price: result1.price , stockquantity: result1.stockquantity
             });
 
 

@@ -31,12 +31,13 @@
 
               
               <div class="row d-flex justify-content-center border-primary my-3">
-                <div class="col-md-6 ">
+                <div class="col-md-6">
                   <button class="btn btn-outline-primary btn-sm btn-block"
-                          [class.disabled]="p.stockquantity == 0"
-                          [class.btn-outline-danger]="p.stockquantity == 0"
-                          (click)="selectProduct(p.id)" [disabled]="p.stockquantity == 0" >
-                          {{ p.stockquantity == 0 ? "NO STOCK" : "Add To Cart"}}
+                  [class.disabled]="p.stockquantity < 1"
+                  [class.btn-outline-danger]="p.stockquantity < 1"
+                  (click)="AddToCart(p.id)"
+                  >
+                    {{ p.stockquantity < 1 ? "NO STOCK" : "Add To Cart"}}
                   </button>
                 </div>
               </div>

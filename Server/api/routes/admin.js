@@ -104,6 +104,7 @@ router.post('/update', (req, res) => {
 
 // get users (admin)
 router.post('/get-users', (req, res) => {
+    console.log(req.body.id)
     User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'admin') {
@@ -112,27 +113,30 @@ router.post('/get-users', (req, res) => {
                 return;
             } else {
                 if (req.body.type === '') {
-                    User.find({ type: { '$ne': 'admin' } })
+                    User.find({$and: [ { _id: { '$ne': req.body.id } }, { type: { '$ne': 'user' } } ] },{cart:0,shipping:0,payment:0})
+                    // $or: [ { status: "A" }, { qty: { $lt: 30 } } ]
+                    // type: { '$ne': 'user' }
                         .then((result) => {
                             console.log('Users sent to admin');
-                            res.send({ status: 0, data: result });
+                            console.log(result)
+                            res.json({users: result });
                             return;
                         })
                         .catch((err) => {
                             console.log('Error');
-                            res.send({ status: -1 });
+                            res.json({ status: -1 });
                             return;
                         });
                 } else {
                     User.find({ type: req.body.type })
                         .then((result) => {
                             console.log('Users sent to admin');
-                            res.send({ status: 0, data: result });
+                            res.json({users: result });
                             return;
                         })
                         .catch((err) => {
                             console.log('Error');
-                            res.send({ status: -1 });
+                            res.json({ status: -1 });
                             return;
                         });
                 }
@@ -151,7 +155,7 @@ router.post('/get-users', (req, res) => {
         })
         .catch((err) => {
             console.log('Admin auth failed');
-            res.send({ status: -1 });
+            res.json({ status: -1 });
             return;
         });
 });
