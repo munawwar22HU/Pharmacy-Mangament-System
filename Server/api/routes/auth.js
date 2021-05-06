@@ -12,11 +12,14 @@ router.post('/login', (req, res) => {
             if (result === null) {
                 console.log(result);
                 console.log('Login failed');
-                res.json('Login failed');
+                res.send({ status: -1 });
                 return;
             } else {
                 console.log('Login successful');
-                res.json({auth: true, email: req.body.email, username: req.body.name});
+                res.send({
+                    status: 0,
+                    user: result
+                });
                 return;
             }
         })
@@ -29,11 +32,9 @@ router.post('/login', (req, res) => {
 
 // create a new user account (customer)
 router.post('/register', (req, res) => {
-    console.log(req.body);
     User.findOne({ email: req.body.email })
         .then((result) => {
             if (result === null) {
-                
                 const user = new User({
                     _id: new mongoose.Types.ObjectId(),
                     type: 'user',
@@ -48,19 +49,23 @@ router.post('/register', (req, res) => {
 
                 user.save()
                     .then((result) => {
-                        res.json({message:'User registered'});
-                        console.log('Register hogaya');
-                        // res.send({ status: 0 });
+
+                        console.log('User registered');
+                        res.send({
+                            status: 0,
+                            user: user
+                        });
                         return;
                     });
             } else {
-                res.json({message:'Email Already in use'});
+                console.log('Email already exists');
+                res.send({ status: -1 });
                 // res.send({ status: -1 });
                 return;
             }
         })
         .catch((err) => {
-            console.log('Login faled');
+            console.log('Register failed');
             res.send({ status: -1 });
             return;
         })

@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const user = require('../models/user');
+const User = require('../models/user');
 const Medicine = require('./../models/medicine');
 
 
 // add new medicine (pharmacist)
 router.post('/add', (req, res) => {
-    user.findById(req.body.id)
+    User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'pharmacist') {
                 console.log('Pharmacist auth failed');
@@ -46,7 +46,7 @@ router.post('/add', (req, res) => {
 
 // remove medicine (pharmacist)
 router.post('/remove', (req, res) => {
-    user.findById(req.body.id)
+    User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'pharmacist') {
                 console.log('Pharmacist auth failed');
@@ -82,7 +82,7 @@ router.post('/remove', (req, res) => {
 
 // update medicine details (pharmacist)
 router.post('/update-medicine', (req, res) => {
-    user.findById(req.body.id)
+    User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'pharmacist') {
                 console.log('Pharmacist auth failed');
@@ -121,7 +121,7 @@ router.post('/update-medicine', (req, res) => {
 
 // update quantity (manager)
 router.post('/update-quantity', (req, res) => {
-    user.findById(req.body.id)
+    User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'manager') {
                 console.log('Manager auth failed');
@@ -168,41 +168,41 @@ router.get('/search', (req, res) => {
     //         else {
     //             // var myCursor =  db.Medicine.find( {} );
     //             // myCursor.forEach(printjson);
-                Medicine.find({})
-                .then((result1) => {
-                    if (result1 === null) {
-                        console.log('No medicine found');
-                        res.send({ status: -1 });
-                        return;
-                    } else {
-                        console.log('Medicine Found');
-                        res.json({
-                            products: result1
-                        });
-                        //console.log(result1);
-                        return;
-                    }
-                })
-                .catch((err) => {
-                    console.log('Search faled');
-                    res.send({ status: -1 });
-                    return;
-                })
-              
-                
-           //}
-        // })
-        // .catch((err) => {
-        //     console.log('Error occured while searching');
-        //     res.send({ status: -1 });
-        //     result.console()
-        //     return;
-        // });
+    Medicine.find({})
+        .then((result1) => {
+            if (result1 === null) {
+                console.log('No medicine found');
+                res.send({ status: -1 });
+                return;
+            } else {
+                console.log('Medicine Found');
+                res.json({
+                    products: result1
+                });
+                //console.log(result1);
+                return;
+            }
+        })
+        .catch((err) => {
+            console.log('Search faled');
+            res.send({ status: -1 });
+            return;
+        })
+
+
+    //}
+    // })
+    // .catch((err) => {
+    //     console.log('Error occured while searching');
+    //     res.send({ status: -1 });
+    //     result.console()
+    //     return;
+    // });
 });
 
 // validate prescription (pharmacist)
 router.post('/prescription', (req, res) => {
-    user.findById(req.body.id)
+    User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'pharmacist') {
                 console.log('Pharmacist auth failed');

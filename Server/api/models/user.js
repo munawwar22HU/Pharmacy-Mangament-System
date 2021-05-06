@@ -8,10 +8,11 @@ const userSchema = mongoose.Schema({
     password: String,
     phone: String,
     cart: [{
+        medicineId: mongoose.Schema.Types.ObjectId,
         name: String,
         description: String,
         price: Number,
-        quantity: String,
+        quantity: Number,
         prescription: String
     }],
     shipping: [{
@@ -33,7 +34,7 @@ userSchema.method("toJSON", function() {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
-  });
+});
 
 
 module.exports = mongoose.model('User', userSchema);
