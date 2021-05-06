@@ -11,27 +11,30 @@ router.post('/login', (req, res) => {
         .then((result) => {
             if (result === null) {
                 console.log(result);
-                res.json('Login failed');
+                console.log('Login failed');
+                res.send({ status: -1 });
                 return;
             } else {
                 console.log('Login successful');
-                res.json({auth: true, email: result.email, name: result.name , phone: result.phone , type: result.type , id: result.id});
+                res.send({
+                    status: 0,
+                    user: result
+                });
                 return;
             }
         })
         .catch((err) => {
-            res.json('Login failed');
+            console.log('Login faled');
+            res.send({ status: -1 });
             return;
         })
 });
 
 // create a new user account (customer)
 router.post('/register', (req, res) => {
-    console.log(req.body);
     User.findOne({ email: req.body.email })
         .then((result) => {
             if (result === null) {
-                
                 const user = new User({
                     _id: new mongoose.Types.ObjectId(),
                     type: 'user',
@@ -46,19 +49,23 @@ router.post('/register', (req, res) => {
 
                 user.save()
                     .then((result) => {
-                        res.json({message:'User registered'});
-                        console.log('Register hogaya');
-                        // res.send({ status: 0 });
+
+                        console.log('User registered');
+                        res.send({
+                            status: 0,
+                            user: user
+                        });
                         return;
                     });
             } else {
-                res.json({message:'Email Already in use'});
+                console.log('Email already exists');
+                res.send({ status: -1 });
                 // res.send({ status: -1 });
                 return;
             }
         })
         .catch((err) => {
-            console.log('Login faled');
+            console.log('Register failed');
             res.send({ status: -1 });
             return;
         })
