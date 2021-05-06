@@ -200,6 +200,36 @@ router.get('/search', (req, res) => {
     // });
 });
 
+router.post('/single', (req, res) => {
+    
+    console.log('single search');
+    Medicine.findById(req.body.id)
+    .then((result1) => {
+        if (result1 === null) {
+            console.log('No medicine found');
+            res.send({ status: -1 });
+            return;
+        } else {
+            console.log('Medicine Found line 223');
+            res.json({
+                id: result1.id, name: result1.name, description: result1.description, prescription: result1.prescription, price: result1.price , stockquantity: result1.stockQuantity
+            });
+
+
+            return;
+        }
+    })
+    .catch((err) => {
+        console.log('Search faled');
+        res.send({ status: -1 });
+        return;
+    })
+    
+    
+
+});
+
+
 // validate prescription (pharmacist)
 router.post('/prescription', (req, res) => {
     User.findById(req.body.id)
