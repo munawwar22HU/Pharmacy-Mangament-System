@@ -3,10 +3,25 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const Medicine = require('./../models/medicine');
+const multer = require('multer');
+const shortid = require('shortid');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, shortid.generate() + file.originalname);
+    }
+})
+const upload = multer({ storage: storage });
 
+// get medicine image
+router.use('/image', express.static('uploads'));
 
 // add new medicine (pharmacist)
-router.post('/add', (req, res) => {
+router.post('/add', upload.single('medicineImage'), (req, res) => {
+    // console.log(req.file);
+
     User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'pharmacist') {
@@ -19,6 +34,7 @@ router.post('/add', (req, res) => {
                     _id: new mongoose.Types.ObjectId(),
                     name: req.body.name,
                     description: req.body.description,
+                    medicineImage: req.file.filename,
                     prescription: Boolean(req.body.prescription),
                     price: Number(req.body.price),
                     stockQuantity: Number(req.body.stockQuantity)
@@ -201,31 +217,36 @@ router.get('/search', (req, res) => {
 });
 
 router.post('/single', (req, res) => {
-    
+
     console.log('single search');
     Medicine.findById(req.body.id)
-    .then((result1) => {
-        if (result1 === null) {
-            console.log('No medicine found');
+        .then((result1) => {
+            if (result1 === null) {
+                console.log('No medicine found');
+                res.send({ status: -1 });
+                return;
+            } else {
+                console.log('Medicine Found line 223');
+                res.json({
+                    id: result1.id,
+                    name: result1.name,
+                    description: result1.description,
+                    prescription: result1.prescription,
+                    price: result1.price,
+                    stockquantity: result1.stockQuantity
+                });
+
+
+                return;
+            }
+        })
+        .catch((err) => {
+            console.log('Search faled');
             res.send({ status: -1 });
             return;
-        } else {
-            console.log('Medicine Found line 223');
-            res.json({
-                id: result1.id, name: result1.name, description: result1.description, prescription: result1.prescription, price: result1.price , stockquantity: result1.stockQuantity
-            });
+        })
 
 
-            return;
-        }
-    })
-    .catch((err) => {
-        console.log('Search faled');
-        res.send({ status: -1 });
-        return;
-    })
-    
-    
 
 });
 

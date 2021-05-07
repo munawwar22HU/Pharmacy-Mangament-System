@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// app.use('/uploads', express.static('uploads'));
+
 var admin = require('./api/routes/admin');
 var auth = require('./api/routes/auth');
 var cart = require('./api/routes/cart');
