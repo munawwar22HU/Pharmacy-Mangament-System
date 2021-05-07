@@ -37,7 +37,7 @@ router.post('/add', upload.single('medicineImage'), (req, res) => {
                     medicineImage: req.file.filename,
                     prescription: Boolean(req.body.prescription),
                     price: Number(req.body.price),
-                    stockQuantity: Number(req.body.stockQuantity)
+                    stockquantity: Number(req.body.stockquantity)
                 });
 
                 medicine.save()
@@ -145,7 +145,7 @@ router.post('/update-quantity', (req, res) => {
                 return;
             } else {
                 Medicine.findByIdAndUpdate(req.body.medicineId, {
-                        stockQuantity: Number(req.body.stockQuantity)
+                        stockquantity: Number(req.body.stockquantity)
                     }, {
                         upsert: false,
                         useFindAndModify: false,
@@ -173,17 +173,6 @@ router.post('/update-quantity', (req, res) => {
 
 // search medicine (if no search string is provided get all medicines) (customer, manager, pharmacist)
 router.get('/search', (req, res) => {
-    // user.findById(req.body.id)
-    //     .then((result) => {
-    //         if (result === null || result.type !== 'pharmacist') {
-    //             console.log('Pharmacist auth failed');
-    //             console.log('test');
-    //             res.send({ status: -1 });
-    //             return;
-    //         } 
-    //         else {
-    //             // var myCursor =  db.Medicine.find( {} );
-    //             // myCursor.forEach(printjson);
     Medicine.find({})
         .then((result1) => {
             if (result1 === null) {
@@ -204,51 +193,58 @@ router.get('/search', (req, res) => {
             res.send({ status: -1 });
             return;
         })
-
-
-    //}
-    // })
-    // .catch((err) => {
-    //     console.log('Error occured while searching');
-    //     res.send({ status: -1 });
-    //     result.console()
-    //     return;
-    // });
 });
 
-router.post('/single', (req, res) => {
-
-    console.log('single search');
-    Medicine.findById(req.body.id)
-        .then((result1) => {
-            if (result1 === null) {
-                console.log('No medicine found');
-                res.send({ status: -1 });
-                return;
-            } else {
-                console.log('Medicine Found line 223');
-                res.json({
-                    id: result1.id,
-                    name: result1.name,
-                    description: result1.description,
-                    prescription: result1.prescription,
-                    price: result1.price,
-                    stockquantity: result1.stockQuantity
-                });
+// router.post('/single', (req, res) => {
+//     Medicine.findById(req.body.id)
+//         .then((result1) => {
+//             if (result1 === null) {
+//                 console.log('No medicine found');
+//                 res.send({ status: -1 });
+//                 return;
+//             } else {
+//                 console.log('Medicine Found line 223');
+//                 res.json({
+//                     id: result1.id,
+//                     name: result1.name,
+//                     description: result1.description,
+//                     prescription: result1.prescription,
+//                     price: result1.price,
+//                     stockquantity: result1.stockQuantity
+//                 });
 
 
-                return;
-            }
-        })
-        .catch((err) => {
-            console.log('Search faled');
-            res.send({ status: -1 });
-            return;
-        })
+//                 return;
+//             }
+//         })
+//         .catch((err) => {
+//                 console.log('Search faled');
+//                 res.send({ status: -1 });
+//                 return;
+//             } else {
+//                 console.log('Medicine Found');
+//                 res.json({
+//                     id: result1.id,
+//                     name: result1.name,
+//                     description: result1.description,
+//                     prescription: result1.prescription,
+//                     price: result1.price,
+//                     stockquantity: result1.stockquantity
+//                 });
+
+
+//                 return;
+//             }
+//         })
+// .catch((err) => {
+//     console.log('Search failed');
+//     res.send({ status: -1 });
+//     return;
+// })
 
 
 
-});
+// });
 
 
 // validate prescription (pharmacist)

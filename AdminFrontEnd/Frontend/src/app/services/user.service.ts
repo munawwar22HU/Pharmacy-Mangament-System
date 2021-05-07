@@ -13,7 +13,7 @@ export class UserService {
   private SERVER_URL = environment.SERVER_URL;
   private user;
   authState$ = new BehaviorSubject<boolean>(this.auth);
-  userData$ = new BehaviorSubject<SocialUser | ResponseModel | object>(null);
+  userData$ = new BehaviorSubject<ResponseModel>(null);
   loginMessage$ = new BehaviorSubject<string>(null);
   userRole: number;
 

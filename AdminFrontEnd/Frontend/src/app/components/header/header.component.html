@@ -10,7 +10,6 @@
       </ul>
       <ul class="header-links pull-right">
         <li><a routerLink="/profile"><i class="fa fa-sign-in"></i> {{authState === false ? 'LOGIN' : 'My Account'}}</a></li>
-        <li *ngIf="!authState"><a routerLink="/register"><i class="fa fa-user-plus"></i> REGISTER</a></li>
       </ul>
     </div>
   </div>
@@ -33,67 +32,27 @@
         <!-- /LOGO -->
 
         <!-- SEARCH BAR -->
-        <div class="col-md-6">
-          <div class="header-search">
+        <!-- <div class="col-md-6" *ngif = "authState">
+          <div class="header-search" >
             <form>
-              <select class="input-select">
+              <select class="input-select"*ngIf="authState" >
                 <option value="0">All Categories</option>
                 <option value="1">Category 01</option>
                 <option value="1">Category 02</option>
               </select>
-              <input class="input" placeholder="Search here" type="text" id="Search1">
-              <button class="search-btn" click = "searchProduct(Search1)">Search</button>
+              <input class="input"*ngIf="authState" placeholder="Search here" type="text" id="Search1" >
+              <button class="search-btn"*ngIf="authState" click = "searchProduct(Search1)"  > Search</button>
+              
               
             </form>
           </div>
-        </div>
+        </div> -->
         <!-- /SEARCH BAR -->
 
         <!-- ACCOUNT -->
         <div class="col-md-3 clearfix">
           <div class="header-ctn">
-            <!-- Wishlist -->
-            <div>
-              <a href="#">
-                <i class="fa fa-heart-o"></i>
-                <span>Your Wishlist</span>
-                <div class="qty">0</div>
-              </a>
-            </div>
-            <!-- /Wishlist -->
-
-            <!-- Cart -->
-            <div class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="cursor:pointer;">
-                <i class="fa fa-shopping-cart"></i>
-                <span>Your Cart</span>
-                <div class="qty">{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}}</div>
-              </a>
-              <div class="cart-dropdown">
-                <div class="cart-list" *ngIf="cartData.data[0].numInCart !== 0">
-                  <div class="product-widget" *ngFor="let c of cartData.data; let i=index">
-                    <div class="product-img">
-                      <img [src]="c.product?.image" alt="{{c.product.name}}" width="20px">
-                    </div>
-                    <div class="product-body">
-                      <h3 class="product-name"><a href="#">{{c.product.name}}</a></h3>
-                      <h4 class="product-price"><span class="qty">{{c.numInCart}} x </span> {{c.product?.price | currency:'USD'}} </h4>
-                    </div>
-                    <button class="delete" (click)="cartService.DeleteProductFromCart(i)"><i class="fa fa-close"></i></button>
-                  </div>
-                </div>
-                <div class="cart-summary">
-                  <small>{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}} Item(s) selected</small>
-                  <h5>TOTAL: {{ cartTotal | currency:'USD'}}</h5>
-                </div>
-                <div class="cart-btns">
-                  <a routerLink="/cart">View Cart</a>
-                  <a routerLink="/checkout">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- /Cart -->
-
+          
             <!-- Menu Toogle -->
             <div class="menu-toggle">
               <a href="#">
@@ -122,7 +81,19 @@
     <div id="responsive-nav">
       <!-- NAV -->
       <ul class="main-nav nav py-3">
-        <li class="active"><a routerLink="/">Home</a></li>
+        <li class="active">
+        <a routerLink="/adminhome"*ngIf="authState && userdata.type =='admin'" >View Users</a>
+        <a routerLink="/home"*ngIf="authState && userdata.type =='pharmacist'" >View Medicines</a>
+        </li>
+        <li class="active">
+          <a routerLink="/adduser"*ngIf="authState && userdata.type =='admin'" >Add new user</a>
+          <a routerLink="/addmedicine"*ngIf="authState && userdata.type =='pharmacist'" >Add new medicine</a>
+        </li>
+
+        <li class="active">
+          <a routerLink="/viewproducts"*ngIf="authState && userdata.type =='pharmacist'" >View Orders</a>
+        </li>
+
         <!-- <li><a href="#">Hot Deals</a></li>
         <li><a href="#">Categories</a></li>
         <li><a href="#">Contact Us</a></li> -->

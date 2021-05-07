@@ -15,7 +15,6 @@ export class ProductService {
 
   /* This is to fetch all products from the backend server */
   getAllProducts(catName: string ="") : Observable<ServerResponse> {
-    console.log("search : "+catName);
     return this.http.get<ServerResponse>(this.SERVER_URL + '/medicine/search');
   }
 
