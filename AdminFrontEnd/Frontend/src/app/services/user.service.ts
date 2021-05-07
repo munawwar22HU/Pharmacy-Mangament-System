@@ -20,38 +20,6 @@ export class UserService {
   constructor(private authService: AuthService,
               private httpClient: HttpClient) {
 
-    // authService.authState.subscribe((user: SocialUser) => {
-    //   if (user != null) {
-    //     this.httpClient.get(`${this.SERVER_URL}/users/validate/${user.email}`).subscribe((res: { status: boolean, user: object }) => {
-    //       //  No user exists in database with Social Login
-    //       if (!res.status) {
-    //         // Send data to backend to register the user in database so that the user can place orders against his user id
-    //         this.registerUser({
-    //           email: user.email,
-    //           fname: user.firstName,
-    //           lname: user.lastName,
-    //           password: '123456'
-    //         }, user.photoUrl, 'social').subscribe(response => {
-    //           if (response.message === 'Registration successful') {
-    //             this.auth = true;
-    //             this.userRole = 555;
-    //             this.authState$.next(this.auth);
-    //             this.userData$.next(user);
-    //           }
-    //         });
-
-    //       } else {
-    //         console.log('Yeh Kab call hota hai');
-    //         this.auth = true;
-    //         // @ts-ignore
-    //         this.userRole = res.user.role;
-    //         this.authState$.next(this.auth);
-    //         this.userData$.next(res.user);
-    //       }
-    //     });
-
-    //   }
-    // });
   }
 
   //  Login User with Email and Password

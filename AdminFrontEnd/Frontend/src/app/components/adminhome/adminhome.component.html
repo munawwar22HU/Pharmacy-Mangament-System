@@ -21,9 +21,15 @@
                 <img src= "https://img.icons8.com/bubbles/2x/user-male.png" alt="{{p.name}}" width="200px" class="card-img-top" (click) = selectUser(p.id) style="cursor: pointer;" >
                 <div class="card-header">
                   <div class="card-title">
-                   <strong><p>{{p.type | titlecase}}</p></strong>
+                   <strong><p>{{p.name | titlecase}}</p></strong>
                     <p>{{p.type | titlecase}}</p>
                     <p>{{p.email}}</p>
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-center border-primary my-3">
+                  <div class="col-md-6">
+                    <button class="btn btn-outline-primary btn-sm btn-block" (click)="selectUser(p.id)">View Users
+                    </button>
                   </div>
                 </div>
               </div>
