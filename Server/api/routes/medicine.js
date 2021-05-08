@@ -14,14 +14,13 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage });
-
-// get medicine image
-router.use('/image', express.static('uploads'));
+  
+router.use('/image', express.static('uploads')); 
+//router.use(express.static(path.join(__dirname, 'public')));
 
 // add new medicine (pharmacist)
 router.post('/add', upload.single('medicineImage'), (req, res) => {
-    // console.log(req.file);
-
+   console.log(req.medicineImage);
     User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'pharmacist') {
@@ -54,13 +53,14 @@ router.post('/add', upload.single('medicineImage'), (req, res) => {
             }
         })
         .catch((err) => {
-            console.log('Pharmacist auth failed');
+            console.log('Pharmacist auth failed!!');
             res.send({ status: -1 });
             return;
         });
 });
 
 // remove medicine (pharmacist)
+
 router.post('/remove', (req, res) => {
     User.findById(req.body.id)
         .then((result) => {
@@ -74,16 +74,16 @@ router.post('/remove', (req, res) => {
                     .then((result) => {
                         if (result === null) {
                             console.log('Medicine does not exist');
-                            res.send({ status: -1 });
+                            res.send({ message: 'Medicine does not exist' });
                             return;
                         } else {
                             console.log('Medicine deleted by pharmacist');
-                            res.send({ status: 0 });
+                            res.send({ message: 'Medicine deleted by pharmacist' });
                             return;
                         }
                     })
                     .catch((err) => {
-                        console.log('Medicine does not exist');
+                        console.log('Medicine does not exist error');
                         res.send({ status: -1 });
                         return;
                     });
@@ -154,7 +154,7 @@ router.post('/update-quantity', (req, res) => {
                     (err, doc) => {
                         if (doc === null) {
                             console.log('Medicine does not exist');
-                            res.send({ status: -1 });
+                            res.send({ message:'Medicine does not exist' });
                             return;
                         } else {
                             console.log('Medicine quantity updated by manager');

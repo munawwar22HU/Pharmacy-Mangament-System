@@ -1,16 +1,11 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppRoutingModule} from '@app/app-routing.module';
 import {AppComponent} from '@app/app.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderComponent} from '@app/components/header/header.component';
 import {FooterComponent} from '@app/components/footer/footer.component';
-// import {CartComponent} from '@app/components/cart/cart.component';
-// import {CheckoutComponent} from '@app/components/checkout/checkout.component';
 import {HomeComponent} from '@app/components/home/home.component';
-import {ProductComponent} from '@app/components/product/product.component';
-// import {ThankyouComponent} from '@app/components/thankyou/thankyou.component';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {ToastrModule} from 'ngx-toastr';
@@ -18,12 +13,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from '@app/components/login/login.component';
 import {ProfileComponent} from '@app/components/profile/profile.component';
 import {AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
-// import {RegisterComponent} from '@app/components/register/register.component';
 import {HomeLayoutComponent} from '@app/components/home-layout/home-layout.component';
 import { AdminhomeComponent } from '@app/components/adminhome/adminhome.component';
 import { AddMedicineComponent } from './components/add-medicine/add-medicine.component';
 import { AddUsersComponent } from './components/add-users/add-users.component';
-import { ViewProductsComponent } from './components/view-products/view-products.component';
+
 import { ViewmedicineComponent } from './components/viewmedicine/viewmedicine.component';
 import { ViewuserComponent } from './components/viewuser/viewuser.component';
 
@@ -46,14 +40,12 @@ export function provideConfig() {
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    ProductComponent,
     LoginComponent,
     ProfileComponent,
     HomeLayoutComponent,
     AdminhomeComponent,
     AddMedicineComponent,
     AddUsersComponent,
-    ViewProductsComponent,
     ViewmedicineComponent,
     ViewuserComponent
   ],

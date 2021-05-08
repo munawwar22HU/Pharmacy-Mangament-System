@@ -14,19 +14,23 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   /* This is to fetch all products from the backend server */
-  getAllProducts(catName: string ="") : Observable<ServerResponse> {
+  getAllProducts() : Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/medicine/search');
   }
 
   /* GET SINGLE PRODUCT FROM SERVER*/
-  getSingleProduct(id: number): Observable<ProductModelServer> {
+  getSingleProduct(id: string): Observable<ProductModelServer> {
     // return this.http.get<ProductModelServer>(this.SERVER_URL + '/single' ,{});
 
     return this.http.post<ProductModelServer>(this.SERVER_URL + '/medicine/single',{id});
   }
 
   /*GET PRODUCTS FROM ONE CATEGORY */
-  getProductsFromCategory(catName: string) : Observable<ProductModelServer[]>  {
-    return this.http.get<ProductModelServer[]>(this.SERVER_URL + '/products/category/' + catName);
-   }
+ 
+  removeMedicine(medicineId: string, id: string): Observable<{ message: string }>{
+   
+  return this.http.post<{ message: string }>(`${this.SERVER_URL}/medicine/remove`, {id,
+    medicineId});
+
+  }
 }

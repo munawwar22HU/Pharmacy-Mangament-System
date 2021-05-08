@@ -1,5 +1,5 @@
 export interface ProductModelServer {
-  id: number;
+  id: string;
   name: string;
   description: string;
   prescription: string;

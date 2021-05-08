@@ -20,6 +20,7 @@ export class AddMedicineComponent implements OnInit {
   prescription: Boolean = false;
   myuser: ResponseModel;
   loginMessage: string;
+  filename: File;
  
   constructor(private authService: AuthService,
     private router: Router,
@@ -46,18 +47,28 @@ export class AddMedicineComponent implements OnInit {
       const price =  this.price;
       const prescription =  this.prescription
       const id = this.myuser.id;
+      
   
       if (form.invalid) {
         return;
       }
   
       // form.reset();
-      this.regmedService.registerMedicine(name,description,stockquantity,price,prescription,id).subscribe((response: { message: string }) => {
+      this.regmedService.registerMedicine(name,description,stockquantity,price,prescription,id,this.filename).subscribe((response: { message: string }) => {
         this.loginMessage = response.message;
       });  
       form.reset();
+
+      
   
   
   }
+  handleFileInput(files: FileList) {
+   
+    this.filename =files[0];
+
+   console.log(this.filename);
+    
+}
 
 }

@@ -1,9 +1,14 @@
 <div class="container emp-profile">
     <form novalidate>
       <div class="row">
+        <ng-container *ngIf="Message?.length > 0">
+          <div class="alert alert-danger alert-dismissible text-center">
+            {{Message}}
+          </div>
+        </ng-container>
         <div class="col-md-4">
           <div class="profile-img">
-            <img src= "{{product.image}}" alt="{{product.name}}"/>
+            <img [src]= "product.image" alt="{{product.name}}" >
             <div class="file btn btn-lg btn-primary">
               Change Photo
               <input name="file" type="file"/>
@@ -13,7 +18,6 @@
         <div class="col-md-6">
           <div class="profile-head">
             <h5>
-              {{product.name}}
             </h5>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item">
@@ -24,7 +28,7 @@
           </div>
         </div>
         <div class="col-md-2">
-          <button click="logout()" class="btn btn-secondary btn-sm" name="btnAddMore" type="button">Logout</button>
+          <button (click)="logout(product.id)" class="btn btn-secondary btn-sm" name="btnAddMore" type="button">Logout</button>
         </div>
       </div>
       <div class="row">
