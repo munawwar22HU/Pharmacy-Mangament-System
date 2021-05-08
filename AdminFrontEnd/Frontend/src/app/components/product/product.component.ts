@@ -36,9 +36,6 @@ export class ProductComponent implements OnInit, AfterViewInit {
         this.id = prodId;
         this.productService.getSingleProduct(this.id).subscribe(prod => {
           this.product = prod;
-
-          
-
         });
       });
 

@@ -43,12 +43,12 @@ router.post('/add', upload.single('medicineImage'), (req, res) => {
                 medicine.save()
                     .then((result) => {
                         console.log('Medicine added by pharmacist');
-                        res.send({ status: 0 });
+                        res.json({ message: 'Medicine added by pharamacist' });
                         return;
                     })
                     .catch((err) => {
                         console.log('Failed to add medicine');
-                        res.send({ status: -1 });
+                        res.json({ message: 'Failed to add medicine' });
                         return;
                     });
             }
@@ -195,56 +195,20 @@ router.get('/search', (req, res) => {
         })
 });
 
-// router.post('/single', (req, res) => {
-//     Medicine.findById(req.body.id)
-//         .then((result1) => {
-//             if (result1 === null) {
-//                 console.log('No medicine found');
-//                 res.send({ status: -1 });
-//                 return;
-//             } else {
-//                 console.log('Medicine Found line 223');
-//                 res.json({
-//                     id: result1.id,
-//                     name: result1.name,
-//                     description: result1.description,
-//                     prescription: result1.prescription,
-//                     price: result1.price,
-//                     stockquantity: result1.stockQuantity
-//                 });
-
-
-//                 return;
-//             }
-//         })
-//         .catch((err) => {
-//                 console.log('Search faled');
-//                 res.send({ status: -1 });
-//                 return;
-//             } else {
-//                 console.log('Medicine Found');
-//                 res.json({
-//                     id: result1.id,
-//                     name: result1.name,
-//                     description: result1.description,
-//                     prescription: result1.prescription,
-//                     price: result1.price,
-//                     stockquantity: result1.stockquantity
-//                 });
-
-
-//                 return;
-//             }
-//         })
-// .catch((err) => {
-//     console.log('Search failed');
-//     res.send({ status: -1 });
-//     return;
-// })
-
-
-
-// });
+router.post('/single', (req, res) => {
+     Medicine.findById(req.body.id)
+         .then((result) => {
+            if (result === null) {
+                console.log('No medicine found');
+                res.send({ status: -1 });
+                return;
+            } else {
+                res.json({id:result.id,description:result.description,image:result.medicineImage,prescription:result.prescription,price:result.price,stockquantity:result.stockquantity,name:result.name});
+                return;
+            }
+        })
+        
+});
 
 
 // validate prescription (pharmacist)

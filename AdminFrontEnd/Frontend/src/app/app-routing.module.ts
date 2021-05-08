@@ -30,7 +30,7 @@ const routes: Routes = [
         path: 'user/:id', component: ViewuserComponent
       },
       {
-        path: 'medicine/:id', component: ViewmedicineComponent
+        path: 'medicine/:id', component: ViewmedicineComponent,  canActivate: [ProfileGuard]
       },
       {
         path: 'adminhome', component: AdminhomeComponent

@@ -26,16 +26,16 @@ router.post('/add', (req, res) => {
                                 shipping: [],
                                 payment: []
                             });
-
+                            console.log(user);
                             user.save()
                                 .then((result) => {
                                     console.log('User added by admin');
-                                    res.send({ status: 0 });
+                                    res.json({ message:'User added by admin' });
                                     return;
                                 });
                         } else {
                             console.log('Email already in use');
-                            res.send({ status: -1 });
+                            res.send({message: 'Email already in use' });
                             return;
                         }
                     });
