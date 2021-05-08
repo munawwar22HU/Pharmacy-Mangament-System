@@ -1,6 +1,6 @@
 import {Component, OnInit } from '@angular/core';
 import {ProductService} from '../../services/product.service';
-import {Router} from '@angular/router';
+import {Router,ActivatedRoute} from '@angular/router';
 import {ProductModelServer, ServerResponse} from '../../models/product.model';
 
 
@@ -23,7 +23,11 @@ export class HomeComponent implements OnInit {
   }
 
   selectProduct(id: number) {
-    this.router.navigate(['/medicine', id]).then();
+    
+    this.router.navigate(['/medicine',id]).then();
+    //this.router.navigateByUrl(this.route.snapshot.queryParams.returnUrl || '/profile');
+    
+   
   }
 
 }
