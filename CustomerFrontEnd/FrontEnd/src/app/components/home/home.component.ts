@@ -20,15 +20,27 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe((prods: ServerResponse) => {
-      this.products = prods.products;
+    this.products = prods.products;
+
+    this.products.forEach( (element) => {
+      element.medicineImage = "http://localhost:3000/medicine/image/" + element.medicineImage;
+      console.log(element.medicineImage);
+  });
+   
+
+    
+        
     });
+
+    
+    
   }
 
-  selectProduct(id: number) {
+  selectProduct(id: string) {
     this.router.navigate(['/product', id]).then();
   }
 
-  AddToCart(id: number) {
+  AddToCart(id: string) {
     console.log('Add to Cart');
     this.cartService.AddProductToCart(id);
   }

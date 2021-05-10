@@ -25,13 +25,13 @@
           <tbody>
            <tr *ngFor="let c of cartData.data; let i=index">
              <td class="d-flex align-items-center justify-content-around">
-               <img [src]="c.product.image" alt="{{c.product.name}}" height="60" class="order-1">
+               <img [src]="c.product.medicineImage" alt="{{c.product.name}}" height="60" class="order-1">
                <span class="text-danger mr-md-2" style="cursor: pointer;"><i class="fa fa-trash" (click)="cartService.DeleteProductFromCart(i)"></i></span>
              </td>
 
              <td><p>{{c.product.name}}</p></td>
 
-             <td><p>{{c.product.price | currency:'USD'}}</p></td>
+             <td><p>{{c.product.price | currency:'Rs. '}}</p></td>
 
              <td>
                <form>
@@ -46,7 +46,7 @@
              </td>
 
              <td>
-               <p>{{cartService.CalculateSubTotal(i) | currency:'USD'}}</p>
+               <p>{{cartService.CalculateSubTotal(i) | currency:'Rs. '}}</p>
              </td>
            </tr>
 
@@ -55,7 +55,7 @@
             <td></td>
             <td></td>
             <td>TOTAL</td>
-            <td>{{cartTotal | currency:'USD'}}</td>
+            <td>{{cartTotal | currency:'Rs. '}}</td>
           </tr>
 
           </tbody>

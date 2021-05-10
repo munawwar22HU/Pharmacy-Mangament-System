@@ -20,6 +20,13 @@ export class HomeComponent implements OnInit {
     
     this.productService.getAllProducts().subscribe((prods: ServerResponse) => {
       this.products = prods.products;
+
+      this.products.forEach((element) => {
+        element.medicineImage = "http://localhost:3000/medicine/image/" + element.medicineImage;
+        console.log(element.medicineImage);
+    });
+     
+
     });
 
     this.userService.userData$.subscribe((data: ResponseModel ) => {

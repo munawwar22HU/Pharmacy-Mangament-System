@@ -19,6 +19,12 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.cartData$.subscribe((data: CartModelServer) => this.cartData = data);
     this.cartService.cartTotal$.subscribe(total => this.cartTotal = total);
+    // this.cartData.data.forEach( (element) => {
+    //   element[0].product.medicineImage = "http://localhost:3000/medicine/image/" + element[0].product.medicineImage;
+    //   console.log(element[0])
+      
+  
+  
   }
 
 

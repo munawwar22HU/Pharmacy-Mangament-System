@@ -77,14 +77,14 @@
                     </div>
                     <div class="product-body">
                       <h3 class="product-name"><a href="#">{{c.product.name}}</a></h3>
-                      <h4 class="product-price"><span class="qty">{{c.numInCart}} x </span> {{c.product?.price | currency:'USD'}} </h4>
+                      <h4 class="product-price"><span class="qty">{{c.numInCart}} x </span> {{c.product?.price | currency:'Rs. '}} </h4>
                     </div>
                     <button class="delete" (click)="cartService.DeleteProductFromCart(i)"><i class="fa fa-close"></i></button>
                   </div>
                 </div>
                 <div class="cart-summary">
                   <small>{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}} Item(s) selected</small>
-                  <h5>TOTAL: {{ cartTotal | currency:'USD'}}</h5>
+                  <h5>TOTAL: {{ cartTotal | currency:'Rs. '}}</h5>
                 </div>
                 <div class="cart-btns">
                   <a routerLink="/cart">View Cart</a>

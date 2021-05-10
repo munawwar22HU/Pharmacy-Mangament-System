@@ -16,11 +16,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
   
 router.use('/image', express.static('uploads')); 
-//router.use(express.static(path.join(__dirname, 'public')));
 
-// add new medicine (pharmacist)
+// Add new medicine (pharmacist)
 router.post('/add', upload.single('medicineImage'), (req, res) => {
-   console.log(req.medicineImage);
+   console.log(req.body);
     User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'pharmacist') {
@@ -34,7 +33,7 @@ router.post('/add', upload.single('medicineImage'), (req, res) => {
                     name: req.body.name,
                     description: req.body.description,
                     medicineImage: req.file.filename,
-                    prescription: Boolean(req.body.prescription),
+                    prescription: req.body.prescription,
                     price: Number(req.body.price),
                     stockquantity: Number(req.body.stockquantity)
                 });
@@ -47,20 +46,21 @@ router.post('/add', upload.single('medicineImage'), (req, res) => {
                     })
                     .catch((err) => {
                         console.log('Failed to add medicine');
+                        console.log(err);
                         res.json({ message: 'Failed to add medicine' });
                         return;
                     });
             }
         })
         .catch((err) => {
+            console.log(err);
             console.log('Pharmacist auth failed!!');
             res.send({ status: -1 });
             return;
         });
 });
 
-// remove medicine (pharmacist)
-
+// Remove medicine (pharmacist)
 router.post('/remove', (req, res) => {
     User.findById(req.body.id)
         .then((result) => {
@@ -96,7 +96,7 @@ router.post('/remove', (req, res) => {
         });
 });
 
-// update medicine details (pharmacist)
+// Update medicine details (pharmacist)
 router.post('/update-medicine', (req, res) => {
     User.findById(req.body.id)
         .then((result) => {
@@ -135,7 +135,7 @@ router.post('/update-medicine', (req, res) => {
         });
 });
 
-// update quantity (manager)
+// Update medicine quantity (manager)
 router.post('/update-quantity', (req, res) => {
     User.findById(req.body.id)
         .then((result) => {
@@ -171,7 +171,7 @@ router.post('/update-quantity', (req, res) => {
         });
 });
 
-// search medicine (if no search string is provided get all medicines) (customer, manager, pharmacist)
+// Get All Products availaible (all users)
 router.get('/search', (req, res) => {
     Medicine.find({})
         .then((result1) => {
@@ -184,7 +184,6 @@ router.get('/search', (req, res) => {
                 res.json({
                     products: result1
                 });
-                //console.log(result1);
                 return;
             }
         })
@@ -194,7 +193,7 @@ router.get('/search', (req, res) => {
             return;
         })
 });
-
+// Get a single Medicine (all users)
 router.post('/single', (req, res) => {
      Medicine.findById(req.body.id)
          .then((result) => {
@@ -203,7 +202,13 @@ router.post('/single', (req, res) => {
                 res.send({ status: -1 });
                 return;
             } else {
-                res.json({id:result.id,description:result.description,image:result.medicineImage,prescription:result.prescription,price:result.price,stockquantity:result.stockquantity,name:result.name});
+                res.json({id:result.id,
+                    description:result.description,
+                    medicineImage:result.medicineImage,
+                    prescription:Boolean(result.prescription),
+                    price:Number(result.price),
+                    stockquantity:Number(result.stockquantity),
+                    name:result.name});
                 return;
             }
         })
@@ -211,7 +216,7 @@ router.post('/single', (req, res) => {
 });
 
 
-// validate prescription (pharmacist)
+// Validate prescription (pharmacist)
 router.post('/prescription', (req, res) => {
     User.findById(req.body.id)
         .then((result) => {

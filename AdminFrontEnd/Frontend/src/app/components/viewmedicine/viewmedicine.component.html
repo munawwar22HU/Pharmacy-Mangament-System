@@ -8,11 +8,7 @@
         </ng-container>
         <div class="col-md-4">
           <div class="profile-img">
-            <img [src]= "product.image" alt="{{product.name}}" >
-            <div class="file btn btn-lg btn-primary">
-              Change Photo
-              <input name="file" type="file"/>
-            </div>
+            <img [src]= "product.medicineImage" alt="{{product.name}}" >         
           </div>
         </div>
         <div class="col-md-6">
@@ -28,7 +24,7 @@
           </div>
         </div>
         <div class="col-md-2">
-          <button (click)="logout(product.id)" class="btn btn-secondary btn-sm" name="btnAddMore" type="button">Logout</button>
+          <button (click)="logout(product.id)" class="btn btn-secondary btn-sm" name="btnAddMore" type="button">Delete</button>
         </div>
       </div>
       <div class="row">
@@ -56,15 +52,15 @@
                   <label>Price</label>
                 </div>
                 <div class="col-md-6">
-                  <p>{{product.price}}</p>
+                  <p>{{product.price | currency:'PKR'}}</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <label>Prescription</label>
                 </div>
-                <div class="col-md-6">
-                  <p>{{product.prescription | titlecase}}</p>
+                <div class="col-md-6" >
+                  <p> {{ product.prescription ? "Required" : "Not Required"}}</p>
                 </div>
               </div>
               <div class="row">
@@ -75,63 +71,7 @@
                   <p>{{product.stockquantity}}</p>
                 </div>
               </div>
-              <!-- <div class="row">
-                <div class="col-md-6">
-                  <label>Profession</label>
-                </div>
-                <div class="col-md-6">
-                  <p>{{product.type}}</p>
-                </div>
-              </div> -->
             </div>
-            <!-- <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Experience</label>
-                </div>
-                <div class="col-md-6">
-                  <p>Expert</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Hourly Rate</label>
-                </div>
-                <div class="col-md-6">
-                  <p>10$/hr</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Total Projects</label>
-                </div>
-                <div class="col-md-6">
-                  <p>230</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>English Level</label>
-                </div>
-                <div class="col-md-6">
-                  <p>Expert</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Availability</label>
-                </div>
-                <div class="col-md-6">
-                  <p>6 months</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label>Your Bio</label><br/>
-                  <p>Your detail description</p>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>

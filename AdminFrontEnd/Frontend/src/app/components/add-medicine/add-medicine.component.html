@@ -12,52 +12,33 @@
               <label for="name">Name</label>
               <input class="form-control" id="name" type="text" [(ngModel)]="name" name="name" required>
             </div>
+           
             <div class="form-group">
-              <label for="file">Choose File</label>
-              <input type="file"
-                     id="file"
-                     
-                     (change)="handleFileInput($event.target.Files)">
-          </div>
-
-         
-  
+                <form enctype="multipart/form-data" >
+                    <input class="form-control-file" type="file"  name="photo" (change)="handleFileInput($event)" value="files">
+                </form>
+            </div>
             <div class="form-group">
               <label for="email">Description</label>
               <input class="form-control" id="description" type="description" [(ngModel)]="description" name="description" required>
             </div>
-  
             <div class="form-group">
               <label for="price">Price</label>
               <input class="form-control" id="price" type="number" [(ngModel)]="price" name="price" required placeholder="price">
             </div>
-  
             <div class="form-group">
               <label for="stockquantity">Stock Quantity</label>
               <input class="form-control" id="stockquantity" type="number" [(ngModel)]="stockquantity" name="stockquantity" required placeholder="Stock Quantity">
             </div>
-
             <div class="form-group">
                 <label for="prescription">Prescription</label>
-                
                 <input  type="checkbox" [value]="true" change="onCheckboxChange($event)">
-                
-               
             </div>
-
-          
             <div class="d-flex flex-column align-items-center justify-content-around">
               <button class="btn btn-primary btn-sm btn-block" (click)="register(myform)" [disabled]="myform.invalid && myform.touched">Register</button>
               <hr>
-              <!-- <h4 class="text-uppercase"><strong>Login Using</strong></h4> -->
-  
-              <!-- <button (click)="signInWithGoogle()" class="btn btn-danger btn-sm btn-block mt-4"><span><i
-                class="fa fa-google"></i> Google </span>
-              </button> -->
             </div>
           </form>
-  
-  
         </div>
       </div>
     </div>

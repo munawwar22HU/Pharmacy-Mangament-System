@@ -7,8 +7,6 @@
       <div class="col-md-12">
         <ul class="breadcrumb-tree">
           <li><a href="#">Home</a></li>
-          <li><a href="#">All Categories</a></li>
-          <li><a href="#">{{product.category}}</a></li>
           <li class="active">{{product.name}}</li>
         </ul>
       </div>
@@ -26,14 +24,19 @@
     <!-- row -->
     <div class="row">
       <!-- Product main img -->
+
+      <div class="col-md-5 col-md-push-2">
+        <div id="product-main-img">
+            <div class="product-preview">
+              <img [src]="product.medicineImage" alt="">
+            </div>
+        
+         
+        </div>
+      </div>
       
       <!-- /Product main img -->
 
-      <!-- Product thumb imgs -->
-      
-
-      
-      <!-- /Product thumb imgs -->
 
       <!-- Product details -->
       <div class="col-md-5">
@@ -41,7 +44,7 @@
           <h2 class="product-name">{{product.name}}</h2>
 
           <div>
-            <h3 class="product-price">{{product.price | currency:'USD'}}</h3>
+            <h3 class="product-price">{{product.price | currency:'Rs. '}}</h3>
             <span class="product-available">In Stock</span>
           </div>
           <p>

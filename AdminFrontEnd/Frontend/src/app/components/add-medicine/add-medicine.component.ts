@@ -20,7 +20,7 @@ export class AddMedicineComponent implements OnInit {
   prescription: Boolean = false;
   myuser: ResponseModel;
   loginMessage: string;
-  filename: File;
+  selectedFile: File;
  
   constructor(private authService: AuthService,
     private router: Router,
@@ -37,38 +37,41 @@ export class AddMedicineComponent implements OnInit {
       onCheckboxchange (event: any) {
         //update the ui
         this.prescription = event.target.value;
-        console.log(this.prescription);
+        
       }
+
+      handleFileInput(event) {
+   
+        this.selectedFile = event.target.files[0]
+  
+        
+    }
     register(form: NgForm) {
       
       const name =  this.name;
       const description =  this.description;
-      const stockquantity =  this.stockquantity;
-      const price =  this.price;
-      const prescription =  this.prescription
+      const stockquantity =  this.stockquantity.toString();
+      const price =  this.price.toString();
+      const prescription =  this.prescription.toString();
       const id = this.myuser.id;
-      
-  
+      const UploadData = new FormData();
+
+      // console.log(this.selectedFile);
+      UploadData.append('name',name);
+      UploadData.append('description',description);
+      UploadData.append('stockquantity',stockquantity);
+      UploadData.append('price',price);
+      UploadData.append('prescription',prescription);
+      UploadData.append('id',id)
+      UploadData.append('medicineImage',this.selectedFile);
       if (form.invalid) {
         return;
       }
   
       // form.reset();
-      this.regmedService.registerMedicine(name,description,stockquantity,price,prescription,id,this.filename).subscribe((response: { message: string }) => {
+      this.regmedService.registerMedicine(UploadData).subscribe((response: { message: string }) => {
         this.loginMessage = response.message;
       });  
       form.reset();
-
-      
-  
-  
   }
-  handleFileInput(files: FileList) {
-   
-    this.filename =files[0];
-
-   console.log(this.filename);
-    
-}
-
 }

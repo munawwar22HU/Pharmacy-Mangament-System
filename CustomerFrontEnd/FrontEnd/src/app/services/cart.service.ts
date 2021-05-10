@@ -21,7 +21,7 @@ export class CartService {
     total: 0,
     prodData: [{
       incart: 0,
-      id: 0
+      id: ''
     }]
   };
 
@@ -85,7 +85,7 @@ export class CartService {
 
   }
 
-  AddProductToCart(id: number, quantity?: number) {
+  AddProductToCart(id: string, quantity?: number) {
     this.productService.getSingleProduct(id).subscribe(prod => {
       //  1. If the cart is empty
       if (this.cartDataServer.data[0].product === undefined) {
@@ -187,7 +187,7 @@ export class CartService {
       this.cartDataClient.total = this.cartDataServer.total;
 
       if (this.cartDataClient.total === 0) {
-        this.cartDataClient = {total: 0, prodData: [{incart: 0, id: 0}]};
+        this.cartDataClient = {total: 0, prodData: [{incart: 0, id: ''}]};
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
       } else {
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
@@ -229,7 +229,7 @@ export class CartService {
 
               this.spinner.hide().then();
               this.router.navigate(['/thankyou'], navigationExtras).then(p => {
-                this.cartDataClient = {total: 0, prodData: [{incart: 0, id: 0}]};
+                this.cartDataClient = {total: 0, prodData: [{incart: 0, id: ''}]};
                 this.cartTotal$.next(0);
                 localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
               });

@@ -7,8 +7,7 @@ const medicineSchema = mongoose.Schema({
     medicineImage: String,
     prescription: Boolean,
     price: Number,
-    stockquantity: Number,
-    URL: String
+    stockquantity: Number
 })
 medicineSchema.method("toJSON", function() {
     const { __v, _id, ...object } = this.toObject();

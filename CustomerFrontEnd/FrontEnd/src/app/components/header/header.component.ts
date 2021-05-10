@@ -27,9 +27,5 @@ export class HeaderComponent implements OnInit {
     this.userService.authState$.subscribe(authState => this.authState = authState);
   }
 
-  searchProduct(catName: string): void{
-    console.log("catName");
-
-  }
-
+  
 }

@@ -31,7 +31,8 @@ export class ViewmedicineComponent implements OnInit{
       this.id = prodId;
       this.productService.getSingleProduct(this.id).subscribe(prod => {
         this.product = prod;
-        this.product.image = "http://localhost:3000/medicine/image/"+this.product.image;
+        this.product.medicineImage = "http://localhost:3000/medicine/image/"+this.product.medicineImage;
+        
       });
 
   

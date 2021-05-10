@@ -13,7 +13,7 @@ declare let $: any;
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit, AfterViewInit {
-  id: number;
+  id: string;
   product: ProductModelServer;
  
 
@@ -36,6 +36,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
         this.id = prodId;
         this.productService.getSingleProduct(this.id).subscribe(prod => {
           this.product = prod;
+          this.product.medicineImage =   "http://localhost:3000/medicine/image/" + this.product.medicineImage;
 
           
 
@@ -123,7 +124,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
     this.quantityInput.nativeElement.value = value.toString();
   }
 
-  addToCart(id: number) {
+  addToCart(id: string) {
     this.cartService.AddProductToCart(id, this.quantityInput.nativeElement.value);
   }
 }

@@ -13,21 +13,12 @@ export class RegistermedicineService {
 
   constructor(private httpClient: HttpClient) { }
 
-  registerMedicine(name:string,description:string,stockquantity:Number,price:Number,prescription:Boolean,id:string,medicineImage: File): Observable<{ message: string }> {
+  registerMedicine(UploadData: FormData): Observable<{ message: string }> {
    
-     
-
+   
   
       
    
-    return this.httpClient.post<{ message: string }>(`${this.SERVER_URL}/medicine/add`, {
-    name, 
-    description,
-    stockquantity,
-    price,
-    prescription,
-    id,
-    medicineImage
-  });
+    return this.httpClient.post<{ message: string }>(`${this.SERVER_URL}/medicine/add`, UploadData);
 }
 }

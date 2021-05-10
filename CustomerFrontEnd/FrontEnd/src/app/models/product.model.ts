@@ -1,15 +1,13 @@
 export interface ProductModelServer {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  prescription: string;
+  prescription: Boolean;
   price: number;
-  image: string;
+  medicineImage: string;
   stockquantity: number;
-  category: string;
 }
 
 export interface ServerResponse {
-  count: number;
   products: ProductModelServer[];
 }

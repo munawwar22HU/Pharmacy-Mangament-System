@@ -13,7 +13,7 @@ export interface CartModelPublic {
   total: number;
   prodData: [
     {
-      id: number,
+      id: string,
       incart: number
     }
   ];
