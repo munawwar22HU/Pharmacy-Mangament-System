@@ -8,9 +8,10 @@ const orderSchema = mongoose.Schema({
         quantity: Number
     }],
     totalAmount: Number,
-    // shipping: mongoose.Types.ObjectId,
-    // payment: mongoose.Types.ObjectId,
-    // shippingCompany: String
+    status: String
+        // shipping: mongoose.Types.ObjectId,
+        // payment: mongoose.Types.ObjectId,
+        // shippingCompany: String
 })
 
 module.exports = mongoose.model('Order', orderSchema);

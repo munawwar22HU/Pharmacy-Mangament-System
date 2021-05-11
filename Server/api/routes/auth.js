@@ -15,7 +15,7 @@ router.post('/login', (req, res) => {
                 return;
             } else {
                 console.log('Login successful');
-                res.json({auth: true, email: result.email, name: result.name , phone: result.phone , type: result.type , id: result.id});
+                res.json({ auth: true, email: result.email, name: result.name, phone: result.phone, type: result.type, id: result.id });
                 return;
             }
         })
@@ -31,7 +31,7 @@ router.post('/register', (req, res) => {
     User.findOne({ email: req.body.email })
         .then((result) => {
             if (result === null) {
-                
+
                 const user = new User({
                     _id: new mongoose.Types.ObjectId(),
                     type: 'user',
@@ -46,13 +46,13 @@ router.post('/register', (req, res) => {
 
                 user.save()
                     .then((result) => {
-                        res.json({message:'User registered'});
+                        res.json({ message: 'User registered' });
                         console.log('Register hogaya');
                         // res.send({ status: 0 });
                         return;
                     });
             } else {
-                res.json({message:'Email Already in use'});
+                res.json({ message: 'Email Already in use' });
                 // res.send({ status: -1 });
                 return;
             }
@@ -63,5 +63,30 @@ router.post('/register', (req, res) => {
             return;
         })
 });
+
+
+router.post('/get-user', (req, res) => {
+    User.findById(req.body.id)
+        .then((result) => {
+            if (result === null) {
+                console.log('User not found');
+                res.send({ status: -1 });
+                return;
+            } else {
+                console.log('User found');
+                res.send({
+                    status: 0,
+                    user: result
+                });
+                return;
+            }
+        })
+        .catch((err) => {
+            console.log('User not found');
+            res.send({ status: -1 });
+            return;
+        })
+});
+
 
 module.exports = router;
