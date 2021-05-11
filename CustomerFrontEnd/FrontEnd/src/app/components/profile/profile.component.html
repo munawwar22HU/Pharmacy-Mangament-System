@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="profile-img">
-          <img src= "https://www.getprofessional.pk/wp-content/uploads/2014/04/img.png" alt="{{myUser.name}}"/>
+          <img [src]= "myUser.userImage" alt="{{myUser.name}}"/>
           <div class="file btn btn-lg btn-primary">
             Change Photo
             <input name="file" type="file"/>

@@ -27,6 +27,19 @@ export class AdminhomeComponent implements OnInit {
     this.adminviewService.getAllUsers(this.admin.id, this.type).subscribe((prods: UserServerResponse) => {
       this.users = prods.users;
       console.log(this.users);
+      this.users.forEach((element) => {
+        if (element.userImage)
+        {
+          element.userImage = "http://localhost:3000/admin/image/" + element.userImage;
+        }
+        else
+        {
+          element.userImage = "https://img.icons8.com/bubbles/2x/user-male.png";
+        }
+        
+        console.log(element.userImage);
+    })
+
     });
 
   }

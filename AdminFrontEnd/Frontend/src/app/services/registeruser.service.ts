@@ -12,17 +12,8 @@ export class RegisteruserService {
 
   constructor( private httpClient: HttpClient) { }
 
-  registerUser(email:string,password:string,phone:string,name:string,id:string,type:string): Observable<{ message: string }> {
-   
-    
-   
-    return this.httpClient.post<{ message: string }>(`${this.SERVER_URL}/admin/add`, {email,
-    name, 
-    password,
-    phone,
-    id,
-    type
-  });
+  registerUser(UploadData: FormData): Observable<{ message: string }> {
+    return this.httpClient.post<{ message: string }>(`${this.SERVER_URL}/admin/add`, UploadData);
 
     
   }

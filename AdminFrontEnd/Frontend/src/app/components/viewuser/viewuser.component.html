@@ -1,1 +1,72 @@
-<p>viewuser works!</p>
+<div class="container emp-profile">
+    <form novalidate>
+      <div class="row">
+        <ng-container *ngIf="Message?.length > 0">
+          <div class="alert alert-danger alert-dismissible text-center">
+            {{Message}}
+          </div>
+        </ng-container>
+        <div class="col-md-4">
+          <div class="profile-img">
+            <img [src]= "user.userImage" alt="{{user.name}}" >         
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="profile-head">
+            <h5>
+            </h5>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home" id="home-tab"
+                   role="tab">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button (click)="remove(user.id)" class="btn btn-secondary btn-sm" name="btnAddMore" type="button">Delete</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="tab-content profile-tab" id="myTabContent">
+            <div aria-labelledby="home-tab" class="tab-pane fade show active" id="home" role="tabpanel">  
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Name</label>
+                </div>
+                <div class="col-md-6">
+                  <p>{{user.name}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Type</label>
+                </div>
+                <div class="col-md-6">
+                  <p>{{user.type}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Phone</label>
+                </div>
+                <div class="col-md-6">
+                  <p>{{user.phone}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Email</label>
+                </div>
+                <div class="col-md-6" >
+                  <p> {{ user.email}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  

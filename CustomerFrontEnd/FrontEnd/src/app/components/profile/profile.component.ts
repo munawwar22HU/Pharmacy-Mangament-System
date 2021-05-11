@@ -21,6 +21,14 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.userData$.subscribe((data: ResponseModel ) => {
         this.myUser = data;
+        if (this.myUser.userImage)
+          {
+            this.myUser.userImage = "http://localhost:3000/admin/image/"+this.myUser.userImage;
+          }
+          else
+          {
+            this.myUser.userImage = "https://img.icons8.com/bubbles/2x/user-male.png";
+          }
       });
   }
 

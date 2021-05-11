@@ -81,14 +81,11 @@ export class UserService {
     this.authState$.next(this.auth);
   }
 
-  registerUser(formData: any): Observable<{ message: string }> {
-    const {phone, name, email, password} = formData;
+  registerUser(formData: FormData): Observable<{ message: string }> {
+    
     console.log('Hellojee')
     console.log(formData);
-   return this.httpClient.post<{ message: string }>(`${this.SERVER_URL}/auth/register`, {email,
-    name, 
-    password,
-    phone});
+   return this.httpClient.post<{ message: string }>(`${this.SERVER_URL}/auth/register`, formData)
 
    
   }
@@ -104,6 +101,7 @@ export interface ResponseModel {
   phone: string;
   id: string;
   type: string;
+  userImage: string;
 }
 
 

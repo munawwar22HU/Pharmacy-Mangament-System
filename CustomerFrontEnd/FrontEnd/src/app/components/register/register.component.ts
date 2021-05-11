@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   loginMessage: string;
   phone: string;
   name: string;
+  selectedFile: File;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -35,6 +36,9 @@ export class RegisterComponent implements OnInit {
  
     }
 
+    handleFileInput(event) {
+      this.selectedFile = event.target.files[0]
+  }
 
   
 
@@ -44,17 +48,29 @@ export class RegisterComponent implements OnInit {
   // }
 
   register(form: NgForm) {
-    const email = this.email;
-    const password = this.password;
-    const phone = this.phone;
-    const name = this.name;
+     
+      const email = this.email;
+      const password = this.password;
+      const phone = this.phone;
+      const name = this.name;
+      const userImage = this.selectedFile;
+  
+      const UploadData = new FormData();
 
-    if (form.invalid) {
-      return;
-    }
+      // console.log(this.selectedFile);
+      UploadData.append('name',name);
+      UploadData.append('password', password);
+      UploadData.append('email',email);
+      UploadData.append('phone', phone);
+      UploadData.append('userImage',userImage);
+
+      if (form.invalid) {
+        console.log('here');
+        return;
+      }
 
     // form.reset();
-    this.userService.registerUser({email,password,phone,name}).subscribe((response: { message: string }) => {
+    this.userService.registerUser(UploadData).subscribe((response: { message: string }) => {
       this.loginMessage = response.message;
     });
     
