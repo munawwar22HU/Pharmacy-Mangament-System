@@ -2,9 +2,22 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('./../models/user');
+const multer = require('multer');
+const shortid = require('shortid');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './profiles/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, shortid.generate() + file.originalname);
+    }
+})
+const upload = multer({ storage: storage });
+
+router.use('/image', express.static('profiles'));
 
 // add user of any type (admin)
-router.post('/add', (req, res) => {
+router.post('/add', upload.single('userImage'), (req, res) => {
     User.findById(req.body.id)
         .then((result) => {
             if (result === null || result.type !== 'admin') {
@@ -22,6 +35,7 @@ router.post('/add', (req, res) => {
                                 name: req.body.name,
                                 password: req.body.password,
                                 phone: req.body.phone,
+                                userImage: req.file.filename,
                                 cart: [],
                                 shipping: [],
                                 payment: []
@@ -30,12 +44,12 @@ router.post('/add', (req, res) => {
                             user.save()
                                 .then((result) => {
                                     console.log('User added by admin');
-                                    res.json({ message:'User added by admin' });
+                                    res.json({ message: 'User added by admin' });
                                     return;
                                 });
                         } else {
                             console.log('Email already in use');
-                            res.send({message: 'Email already in use' });
+                            res.send({ message: 'Email already in use' });
                             return;
                         }
                     });
@@ -113,11 +127,11 @@ router.post('/get-users', (req, res) => {
                 return;
             } else {
                 if (req.body.type === '') {
-                    User.find({$and: [ { _id: { '$ne': req.body.id } }, { type: { '$ne': 'user' } } ] },{cart:0,shipping:0,payment:0})
+                    User.find({ $and: [{ _id: { '$ne': req.body.id } }, { type: { '$ne': 'user' } }] }, { cart: 0, shipping: 0, payment: 0 })
                         .then((result) => {
                             console.log('Users sent to admin');
                             console.log(result)
-                            res.json({users: result });
+                            res.json({ users: result });
                             return;
                         })
                         .catch((err) => {
@@ -129,7 +143,7 @@ router.post('/get-users', (req, res) => {
                     User.find({ type: req.body.type })
                         .then((result) => {
                             console.log('Users sent to admin');
-                            res.json({users: result });
+                            res.json({ users: result });
                             return;
                         })
                         .catch((err) => {

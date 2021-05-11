@@ -2,6 +2,19 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('./../models/user');
+const multer = require('multer');
+const shortid = require('shortid');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './profiles/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, shortid.generate() + file.originalname);
+    }
+})
+const upload = multer({ storage: storage });
+
+router.use('/image', express.static('profiles'));
 
 // check user credentials and handle login (any user)
 router.post('/login', (req, res) => {
@@ -15,7 +28,7 @@ router.post('/login', (req, res) => {
                 return;
             } else {
                 console.log('Login successful');
-                res.json({ auth: true, email: result.email, name: result.name, phone: result.phone, type: result.type, id: result.id });
+                res.json({ auth: true, email: result.email, name: result.name, phone: result.phone, type: result.type, id: result.id, userImage: result.userImage });
                 return;
             }
         })
@@ -26,12 +39,11 @@ router.post('/login', (req, res) => {
 });
 
 // create a new user account (customer)
-router.post('/register', (req, res) => {
-    console.log(req.body);
+router.post('/register', upload.single('userImage'), (req, res) => {
+    // console.log(req.body);
     User.findOne({ email: req.body.email })
         .then((result) => {
             if (result === null) {
-
                 const user = new User({
                     _id: new mongoose.Types.ObjectId(),
                     type: 'user',
@@ -39,6 +51,7 @@ router.post('/register', (req, res) => {
                     name: req.body.name,
                     password: req.body.password,
                     phone: req.body.phone,
+                    userImage: req.file.filename,
                     cart: [],
                     shipping: [],
                     payment: []
@@ -47,7 +60,7 @@ router.post('/register', (req, res) => {
                 user.save()
                     .then((result) => {
                         res.json({ message: 'User registered' });
-                        console.log('Register hogaya');
+                        console.log('User registered');
                         // res.send({ status: 0 });
                         return;
                     });
@@ -58,10 +71,10 @@ router.post('/register', (req, res) => {
             }
         })
         .catch((err) => {
-            console.log('Login faled');
+            console.log('Register failed');
             res.send({ status: -1 });
             return;
-        })
+        });
 });
 
 

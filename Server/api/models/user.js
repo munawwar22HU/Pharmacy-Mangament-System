@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
     name: String,
     password: String,
     phone: String,
+    userImage: String,
     cart: [{
         medicineId: mongoose.Schema.Types.ObjectId,
         name: String,
