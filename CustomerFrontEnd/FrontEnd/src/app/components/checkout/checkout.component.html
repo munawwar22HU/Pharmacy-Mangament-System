@@ -120,9 +120,9 @@
             <div><strong>TOTAL</strong></div>
           </div>
           <div class="order-products">
-            <div class="order-col" *ngFor="let c of cartData.data">
-              <div>{{c.numInCart}} x {{c.product.name}}</div>
-              <div>{{(c.product.price * c.numInCart) | currency:'USD'}}</div>
+            <div class="order-col" *ngFor="let c of cartData.cart">
+              <div>{{c.quantity}} x {{c.name}}</div>
+              <div>{{(c.price * c.quantity) | currency:'USD'}}</div>
             </div>
 
           </div>
@@ -157,7 +157,7 @@
 </div>
 <!-- /SECTION -->
 
-<div class="text-center my-5" *ngIf="cartData.total <= 0;">
+<div class="text-center my-5" *ngIf="cartTotal <= 0;">
   <h4>Your Cart Is Empty</h4>
   <button class="btn btn-primary btn-lg mt-3" routerLink="/">GO TO SHOP</button>
 </div>

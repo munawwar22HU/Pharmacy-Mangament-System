@@ -1,6 +1,6 @@
 <div class="container my-5">
   <!-- When the cart is empty-->
-  <div class="text-center my-5" *ngIf="cartData.data[0].numInCart===0;">
+  <div class="text-center my-5" *ngIf="cartData.cart[0].quantity===0;">
     <h4>Your Cart Is Empty</h4>
     <button class="btn btn-primary btn-lg mt-3" routerLink="/">GO TO SHOP</button>
   </div>
@@ -8,13 +8,12 @@
 
 
   <!--When the cart has some items -->
-  <ng-container *ngIf="cartData.data[0].numInCart !==0">
+  <ng-container *ngIf="cartData.cart[0].quantity !==0">
     <div class="row">
       <div class="col-md-12 ">
         <table class="table">
           <thead class="table-dark">
             <tr class="text-center">
-              <th>Image</th>
               <th>Title</th>
               <th>Price</th>
               <th>Quantity</th>
@@ -23,24 +22,15 @@
           </thead>
 
           <tbody>
-           <tr *ngFor="let c of cartData.data; let i=index">
-             <td class="d-flex align-items-center justify-content-around">
-               <img [src]="c.product.medicineImage" alt="{{c.product.name}}" height="60" class="order-1">
-               <span class="text-danger mr-md-2" style="cursor: pointer;"><i class="fa fa-trash" (click)="cartService.DeleteProductFromCart(i)"></i></span>
-             </td>
-
-             <td><p>{{c.product.name}}</p></td>
-
-             <td><p>{{c.product.price | currency:'Rs. '}}</p></td>
-
+           <tr *ngFor="let c of cartData.cart; let i=index">
+             <td><p>{{c.name}}</p></td>
+             <td><p>{{c.price | currency:'Rs. '}}</p></td>
              <td>
                <form>
-                 <div class="value-button" id="decrease" (click)="ChangeQuantity(i, false)">
-                   <i class="fa fa-minus"></i>
+                 <div class="value-button" id="decrease" (click)="ChangeQuantity(i, false)"><i class="fa fa-minus"></i>
                  </div>
-                 <input type="number" id="number" [value]="c.numInCart" readonly [max]="c.product.quantity" />
-                 <div class="value-button" id="increase" (click)="ChangeQuantity(i, true)">
-                   <i class="fa fa-plus"></i>
+                 <input type="number" id="number" [value]="c.quantity" readonly [max]="c.stockquantity" />
+                 <div class="value-button" id="increase" (click)="ChangeQuantity(i, true)"><i class="fa fa-plus"></i>
                  </div>
                </form>
              </td>

@@ -2,10 +2,14 @@ import {ProductModelServer} from './product.model';
 
 
 export interface CartModelServer {
-  total: number;
-  data: [{
-    product: ProductModelServer,
-    numInCart: number
+  cart: [{
+    id: string,
+    name: string,
+    description: string,
+    price: number,
+    quantity: number,
+    prescription: string,
+    stockquantity: number
   }];
 }
 
