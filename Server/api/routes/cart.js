@@ -64,7 +64,7 @@ router.post('/add', (req, res) => {
                                         return;
                                     } else {
                                         console.log('Medicine added to cart');
-                                        res.json({ message: 'Medicine added to cart' });
+                                        res.send({ message: 'Medicine added to cart' });
                                         return;
                                     }
                                 });
@@ -151,7 +151,7 @@ router.post('/update-quantity', (req, res) => {
                                     return;
                                 } else {
                                     console.log('Medicine quantity updated');
-                                    res.send({ status: 0 });
+                                    res.json({ status: 0 });
                                     return;
                                 }
                             });

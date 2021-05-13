@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {CartModelServer} from '../../models/cart.model';
 import { UserService , ResponseModel } from '@app/services/user.service';
+import { copyFileSync } from 'node:fs';
 
 @Component({
   selector: 'app-checkout',
@@ -18,6 +19,7 @@ export class CheckoutComponent implements OnInit {
   id: string;
   myuser: ResponseModel;
   flag: Boolean = true;
+  count: number;
   
 
 
@@ -39,39 +41,35 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  async addMedToCart(id:string,quantity: Number,price: Number, medicineId: string)
+async addMedToCart(id:string,quantity: Number,price: Number, medicineId: string)
   {
-    
+    console.log('Called')
     let httpdata = await this.cartService.AdddSingleMedicine(id,medicineId,price,quantity);
+    
     console.log(httpdata);
-    
-
-
-    
-    
-    
+    return httpdata
+  
     
   }
 
-  async onCheckout() {
+ async onCheckout() {
     if (this.cartTotal > 0) {
       
+      this.count = 0;
       const id =  this.myuser.id;
-      this.cartData.cart.forEach(p => {
+      for (const p of this.cartData.cart)
+      {
         this.flag = false;
         const quantity = p.quantity;
         const price = p.price;
         const medicineId = p.id;
-        this.addMedToCart(id,quantity,price,medicineId);
-        this.flag = true;
-        
-      });
+        console.log(p.id);
+        let data = await this.cartService.AdddSingleMedicine(id,medicineId,price,quantity);
+        console.log(data)
+      };
     
-    if (this.flag===true)
-    {
-     let httpdata = await this.cartService.CheckoutFromCart(id);
-    }
-     
+    let httpdata = this.cartService.CheckoutFromCart(id);
+    console.log(httpdata)
       
     } 
     else {

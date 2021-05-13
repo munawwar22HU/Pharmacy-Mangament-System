@@ -256,16 +256,16 @@ export class CartService {
     }
   }
 
-  AdddSingleMedicine(id: string, medicineId: string,price: Number, quantity: Number ) {
+  async AdddSingleMedicine(id: string, medicineId: string,price: Number, quantity: Number ) 
+  {
     const prescription = '';
-
-    
-    return this.http.post(`${this.SERVER_URL}/cart/add`,{id,medicineId,price,quantity,prescription}).toPromise()
+    return this.http.post<{msg : string}>(`${this.SERVER_URL}/cart/add`,{id,medicineId,price,quantity,prescription}).toPromise();
   }
   
 
   CheckoutFromCart(id: string) {
 
+    console.log('placing order');
     this.resetServerData();
 
     this.cartDataClient = {total: 0, prodData: [{incart: 0, id: ''}]};
