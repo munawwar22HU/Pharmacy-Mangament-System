@@ -4,7 +4,7 @@ import {ProductService} from './product.service';
 import {OrderService} from './order.service';
 import {environment} from '../../environments/environment';
 import {CartModelPublic, CartModelServer} from '../models/cart.model';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject,Observable} from 'rxjs';
 import {NavigationExtras, Router} from '@angular/router';
 import {ProductModelServer} from '../models/product.model';
 import {ToastrService} from 'ngx-toastr';
@@ -15,7 +15,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
   providedIn: 'root'
 })
 export class CartService {
-  private serverURL = environment.SERVER_URL;
+  private SERVER_URL = environment.SERVER_URL;
   private Ordertotal : number;
 
   // Data variable to store the cart information on the client's local storage
@@ -37,7 +37,8 @@ export class CartService {
       description:'',
       name: '',
       stockquantity: 0
-    }]
+    }],
+    total: 0
   };
 
   /* OBSERVABLES FOR THE COMPONENTS TO SUBSCRIBE*/
@@ -52,7 +53,7 @@ export class CartService {
               private toast: ToastrService,
               private spinner: NgxSpinnerService) {
 
-    this.cartTotal$.next(this.Ordertotal); // Calculate total
+    this.cartTotal$.next(this.cartDataServer.total); // Calculate total
     this.cartData$.next(this.cartDataServer); 
 
     //  Get the information from local storage ( if any )
@@ -80,7 +81,7 @@ export class CartService {
             this.cartDataServer.cart[0].stockquantity =  actualProductInfo.stockquantity;
 
             this.CalculateTotal();
-            this.cartDataClient.total = this.Ordertotal;
+            this.cartDataClient.total = this.cartDataServer.total;
             localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
           } else {
             // CartDataServer already has some entry in it
@@ -95,7 +96,7 @@ export class CartService {
             });
 
             this.CalculateTotal();
-            this.cartDataClient.total = this.Ordertotal;
+            this.cartDataClient.total = this.cartDataServer.total;
             localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
           }
           this.cartData$.next({...this.cartDataServer});
@@ -107,7 +108,7 @@ export class CartService {
   }
 
   AddProductToCart(id: string, quantity?: number) {
-    console.log('Add Product to Cart');
+    
     
     this.productService.getSingleProduct(id).subscribe(prod => {
      //  1. If the cart is empty
@@ -120,10 +121,10 @@ export class CartService {
       this.cartDataServer.cart[0].quantity = quantity !== undefined ? quantity : 1;
       this.cartDataServer.cart[0].stockquantity = prod.stockquantity;
 
-    //     this.CalculateTotal();
+    this.CalculateTotal();
     this.cartDataClient.prodData[0].incart = this.cartDataServer.cart[0].quantity;
     this.cartDataClient.prodData[0].id = prod.id;
-    //     this.cartDataClient.total = this.cartDataServer.total;
+    this.cartDataClient.total = this.cartDataServer.total;
     localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
     this.cartData$.next({...this.cartDataServer});
     this.toast.success(`${prod.name} added to the cart`, 'Product Added', {
@@ -148,7 +149,7 @@ export class CartService {
     }
     this.cartDataClient.prodData[index].incart = this.cartDataServer.cart[index].quantity;
     this.CalculateTotal();
-    this.cartDataClient.total = this.Ordertotal;
+    this.cartDataClient.total = this.cartDataServer.total;
     localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
     this.toast.info(`${prod.name} quantity updated in the cart`, 'Product Updated', {
       timeOut: 1500,
@@ -180,7 +181,7 @@ export class CartService {
       });
 
     this.CalculateTotal();
-    this.cartDataClient.total = this.Ordertotal;
+    this.cartDataClient.total = this.cartDataServer.total;
     localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
     this.cartData$.next({...this.cartDataServer});
     }  // END OF ELSE
@@ -198,7 +199,7 @@ export class CartService {
       data.quantity < data.stockquantity ? data.quantity++ : data.stockquantity;
       this.cartDataClient.prodData[index].incart = data.quantity;
       this.CalculateTotal();
-      this.cartDataClient.total = this.Ordertotal;
+      this.cartDataClient.total = this.cartDataServer.total;
       localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
       this.cartData$.next({...this.cartDataServer});
     }
@@ -214,7 +215,7 @@ export class CartService {
         this.cartData$.next({...this.cartDataServer});
         this.cartDataClient.prodData[index].incart = data.quantity;
         this.CalculateTotal();
-        this.cartDataClient.total = this.Ordertotal;
+        this.cartDataClient.total = this.cartDataServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
       }
     }
@@ -225,7 +226,7 @@ export class CartService {
       this.cartDataServer.cart.splice(index, 1);
       this.cartDataClient.prodData.splice(index, 1);
       this.CalculateTotal();
-      this.cartDataClient.total = this.Ordertotal;
+      this.cartDataClient.total = this.cartDataServer.total;
 
       if (this.cartDataClient.total === 0) {
         this.cartDataClient = {total: 0, prodData: [{incart: 0, id: ''}]};
@@ -235,14 +236,14 @@ export class CartService {
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
       }
 
-      if (this.Ordertotal === 0) {
+      if (this.cartDataServer.total === 0) {
         this.cartDataServer = {cart: [{  quantity: 0,
           price: 0,
           id: '',
           prescription: '',
           description:'',
           name: '',
-          stockquantity: 0}]};
+          stockquantity: 0}],total:0};
         this.cartData$.next({...this.cartDataServer});
       } else {
         this.cartData$.next({...this.cartDataServer});
@@ -255,7 +256,27 @@ export class CartService {
     }
   }
 
-  CheckoutFromCart(userId: number) {
+  AdddSingleMedicine(id: string, medicineId: string,price: Number, quantity: Number ) {
+    const prescription = '';
+
+    
+    return this.http.post(`${this.SERVER_URL}/cart/add`,{id,medicineId,price,quantity,prescription}).toPromise()
+  }
+  
+
+  CheckoutFromCart(id: string) {
+
+    this.resetServerData();
+
+    this.cartDataClient = {total: 0, prodData: [{incart: 0, id: ''}]};
+    this.cartTotal$.next(0);
+    localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
+
+    return this.http.post<{ message: string }>(`${this.SERVER_URL}/cart/checkout`,{id}).toPromise();
+
+  }
+
+    
   //   this.http.post(`${this.serverURL}/orders/payment`, null).subscribe((res: { success: boolean }) => {
   //     if (res.success) {
 
@@ -295,7 +316,7 @@ export class CartService {
   //       });
   //     }
   //   });
-  }
+  
 
   private CalculateTotal() {
     
@@ -307,28 +328,30 @@ export class CartService {
 
     Total += numInCart * price;
     });
-    this.Ordertotal = Total;
-    this.cartTotal$.next(Total);
+    this.cartDataServer.total = Total;
+    this.cartTotal$.next(this.cartDataServer.total);
   }
 
 
   private resetServerData() {
-    // this.cartDataServer = {
-    //   total: 0,
-    //   data: [{
-    //     numInCart: 0,
-    //     product: undefined
-    //   }]
-    // };
+    
+    this.cartDataServer = {cart: [{  quantity: 0,
+      price: 0,
+      id: '',
+      prescription: '',
+      description:'',
+      name: '',
+      stockquantity: 0}], total:0};
 
-    // this.cartData$.next({...this.cartDataServer});
+
+    this.cartData$.next({...this.cartDataServer});
   }
 
   CalculateSubTotal(index): number {
     let subTotal = 0;
 
     const p = this.cartDataServer.cart[index];
-    // // @ts-ignore
+    // @ts-ignore
     subTotal = p.price * p.quantity;
 
     return subTotal;

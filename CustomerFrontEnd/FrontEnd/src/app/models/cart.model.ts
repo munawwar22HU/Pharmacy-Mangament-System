@@ -11,6 +11,7 @@ export interface CartModelServer {
     prescription: string,
     stockquantity: number
   }];
+  total: number;
 }
 
 export interface CartModelPublic {

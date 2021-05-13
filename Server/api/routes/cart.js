@@ -22,11 +22,12 @@ router.post('/get', (req, res) => {
 
 // add medicine to cart (customer)
 router.post('/add', (req, res) => {
+    console.log('add medicine');
     Medicine.findById(req.body.medicineId)
         .then((result) => {
             if (result === null) {
                 console.log('Medicine does not exist');
-                res.send({ status: -1 });
+                res.send({ message: 'Medicne does not exist' });
                 return;
             } else {
                 var medicineName = result['name'];
@@ -39,10 +40,6 @@ router.post('/add', (req, res) => {
                             res.send({ status: -1 });
                             return;
                         } else {
-                            // console.log('Medicine deleted by pharmacist');
-                            // res.send({ status: 0 });
-                            // return;
-                            // result['cart'].push('test');
                             console.log('Medicine name', medicineName);
                             result['cart'].push({
                                 medicineId: req.body.medicineId,
@@ -63,11 +60,11 @@ router.post('/add', (req, res) => {
                                 (err, doc) => {
                                     if (doc === null) {
                                         console.log('Add to cart failed');
-                                        res.send({ status: -1 });
+                                        res.send({ message: 'Add to cart failed' });
                                         return;
                                     } else {
                                         console.log('Medicine added to cart');
-                                        res.send({ status: 0 });
+                                        res.json({ message: 'Medicine added to cart' });
                                         return;
                                     }
                                 });
@@ -217,7 +214,7 @@ router.post('/checkout', (req, res) => {
                 order.save()
                     .then((result) => {
                         console.log('Order placed');
-                        res.send({ status: 0 });
+                        res.json({message: 'Order placed' });
                         // res.send({ status: 0 });
                         return;
                     });
