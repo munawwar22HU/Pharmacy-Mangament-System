@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from '../../services/cart.service';
 import {OrderService} from '../../services/order.service';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {CartModelServer} from '../../models/cart.model';
 import { UserService , ResponseModel } from '@app/services/user.service';
-import { copyFileSync } from 'node:fs';
+
 
 @Component({
   selector: 'app-checkout',
@@ -41,16 +41,6 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-async addMedToCart(id:string,quantity: Number,price: Number, medicineId: string)
-  {
-    console.log('Called')
-    let httpdata = await this.cartService.AdddSingleMedicine(id,medicineId,price,quantity);
-    
-    console.log(httpdata);
-    return httpdata
-  
-    
-  }
 
  async onCheckout() {
     if (this.cartTotal > 0) {
@@ -69,8 +59,20 @@ async addMedToCart(id:string,quantity: Number,price: Number, medicineId: string)
       };
     
     let httpdata = this.cartService.CheckoutFromCart(id);
-    console.log(httpdata)
-      
+    let orderdata =  (await httpdata).orderdata;
+    const orderid = orderdata.id;
+    const medicine = orderdata.medicine;
+    const totalAmount = this.cartTotal;
+
+    console.log(orderdata);
+
+    const navigationExtras: NavigationExtras = {
+    state: {
+     orderData: orderdata 
+    }
+
+  };
+    this.router.navigate(['/thankyou'],navigationExtras);
     } 
     else {
       return;

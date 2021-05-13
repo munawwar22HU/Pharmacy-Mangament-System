@@ -9,9 +9,12 @@ const orderSchema = mongoose.Schema({
     }],
     totalAmount: Number,
     status: String
-        // shipping: mongoose.Types.ObjectId,
-        // payment: mongoose.Types.ObjectId,
-        // shippingCompany: String
+        
 })
 
+orderSchema.method("toJSON", function() {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+});
 module.exports = mongoose.model('Order', orderSchema);

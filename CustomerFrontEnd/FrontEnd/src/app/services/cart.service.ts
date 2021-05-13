@@ -272,9 +272,14 @@ export class CartService {
     this.cartTotal$.next(0);
     localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
 
-    return this.http.post<{ message: string }>(`${this.SERVER_URL}/cart/checkout`,{id}).toPromise();
+    return this.http.post<{ message: string , orderdata: OrderResponse }>(`${this.SERVER_URL}/cart/checkout`,{id}).toPromise();
 
   }
+
+  // ThankyouPage()
+  // {
+
+  // }
 
     
   //   this.http.post(`${this.serverURL}/orders/payment`, null).subscribe((res: { success: boolean }) => {
@@ -360,11 +365,13 @@ export class CartService {
 
 
 interface OrderResponse {
-  order_id: number;
-  success: boolean;
-  message: string;
-  products: [{
-    id: string,
-    numInCart: string
+  id: string;
+  userId: string
+  
+  medicine: [{
+    medicineId: string,
+    quantity: Number
   }];
+  totalAmount: Number,
+  status: String
 }

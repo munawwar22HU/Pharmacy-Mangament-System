@@ -185,7 +185,7 @@ router.post('/checkout', (req, res) => {
                     totalAmount += result.cart[i].quantity * result.cart[i].price;
                     orderMedicine.push({
                         medicineId: result.cart[i].medicineId,
-                        quantity: result.cart[i].quantity
+                        quantity: Number(result.cart[i].quantity)
                     });
                 }
                 User.findByIdAndUpdate(req.body.id, {
@@ -208,13 +208,13 @@ router.post('/checkout', (req, res) => {
                     _id: new mongoose.Types.ObjectId(),
                     userId: req.body.id,
                     medicine: orderMedicine,
-                    totalAmount: totalAmount
+                    totalAmount: Number(totalAmount)
                 });
 
                 order.save()
                     .then((result) => {
                         console.log('Order placed');
-                        res.json({message: 'Order placed' });
+                        res.json({message: 'Order placed' , orderdata: order });
                         // res.send({ status: 0 });
                         return;
                     });
