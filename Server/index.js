@@ -43,5 +43,6 @@ app.use('/shipping', shipping);
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
-    connectDB();
+    
+    connectDB(); // Commented out - MongoDB Atlas cluster is no longer accessible
 });

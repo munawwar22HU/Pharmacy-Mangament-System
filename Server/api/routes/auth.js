@@ -18,6 +18,7 @@ router.use('/image', express.static('profiles'));
 
 // check user credentials and handle login (any user)
 router.post('/login', (req, res) => {
+    console.log('Login attempt:');
     console.log(req.body.email);
     console.log(req.body.password);
     User.findOne({ email: req.body.email, password: req.body.password })
@@ -71,6 +72,7 @@ router.post('/register', upload.single('userImage'), (req, res) => {
             }
         })
         .catch((err) => {
+            console.log(err);
             console.log('Register failed');
             res.send({ status: -1 });
             return;
