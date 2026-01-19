@@ -83,8 +83,16 @@ Pharmacy-Management-System/
    ```
 
 5. **Configure MongoDB Connection**
-   - Update the MongoDB connection string in `Server/connection.js`
-   - Replace the URI with your MongoDB Atlas connection string or local MongoDB URI
+   - Copy the `.env.example` file to `.env` in the `Server` directory:
+     ```bash
+     cd Server
+     copy .env.example .env
+     ```
+   - Open `Server/.env` and replace the placeholder with your MongoDB Atlas connection string or local MongoDB URI:
+     ```
+     MONGODB_URI=your_mongodb_connection_string_here
+     ```
+   - **Important:** Never commit the `.env` file to version control (it's already in `.gitignore`)
 
 ### Running the Project
 
